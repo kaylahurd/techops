@@ -39,35 +39,77 @@
     header {
       background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
       color: #fff;
-      padding: 28px 32px 24px;
+      padding: 22px 32px 0;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 200;
       box-shadow: 0 2px 12px rgba(0,0,80,0.18);
     }
-    header .header-inner {
+    .header-top {
       max-width: 1100px;
       margin: 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 0;
     }
-    header h1 {
-      font-size: 1.55rem;
+    .header-title h1 {
+      font-size: 1.45rem;
       font-weight: 700;
       letter-spacing: -0.3px;
     }
-    header p.subtitle {
-      font-size: 0.875rem;
-      opacity: 0.85;
-      margin-top: 4px;
+    .header-title p {
+      font-size: 0.82rem;
+      opacity: 0.82;
+      margin-top: 2px;
     }
 
-    /* ── Search bar ── */
-    .search-wrap {
-      margin-top: 18px;
+    /* Tab nav inside header */
+    .tab-nav {
+      display: flex;
+      gap: 4px;
+      align-self: flex-end;
+    }
+    .tab-nav button {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.85);
+      padding: 8px 20px;
+      border-radius: 8px 8px 0 0;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      border-bottom: none;
+    }
+    .tab-nav button:hover { background: rgba(255,255,255,0.22); color: #fff; }
+    .tab-nav button.active {
+      background: var(--bg);
+      color: var(--brand);
+      font-weight: 700;
+      border-color: transparent;
+    }
+
+    /* Search bar strip — only shown on Browse tab */
+    .search-strip {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      position: sticky;
+      top: 88px;
+      z-index: 190;
+    }
+    .search-strip.hidden { display: none; }
+    .search-inner {
+      max-width: 1100px;
+      margin: 0 auto;
       position: relative;
     }
-    .search-wrap svg {
+    .search-inner svg {
       position: absolute;
-      left: 14px;
+      left: 13px;
       top: 50%;
       transform: translateY(-50%);
       color: var(--muted);
@@ -75,23 +117,21 @@
     }
     #searchInput {
       width: 100%;
-      max-width: 620px;
-      padding: 11px 16px 11px 42px;
+      max-width: 560px;
+      padding: 9px 38px 9px 40px;
       border-radius: 8px;
-      border: none;
-      font-size: 0.95rem;
-      background: rgba(255,255,255,0.95);
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      background: #fff;
       color: var(--text);
       outline: none;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.12);
-      transition: box-shadow 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    #searchInput:focus {
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
-    }
+    #searchInput:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0,87,168,0.12); }
     #clearSearch {
       position: absolute;
-      right: calc(100% - 620px + 12px);
+      left: 526px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
@@ -100,23 +140,29 @@
       color: var(--muted);
       font-size: 1.1rem;
       display: none;
-      padding: 4px;
+      padding: 2px 6px;
     }
-    @media (max-width: 680px) { #clearSearch { right: 12px; } }
-    #searchInput:not(:placeholder-shown) ~ #clearSearch { display: block; }
+    #searchInput:not([value=""]) ~ #clearSearch,
+    #searchInput.has-value ~ #clearSearch { display: block; }
 
-    /* ── Layout ── */
+    /* ── Panel system ── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── Browse layout ── */
     .layout {
       max-width: 1100px;
-      margin: 28px auto;
+      margin: 24px auto;
       padding: 0 20px 60px;
       display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 24px;
+      grid-template-columns: 210px 1fr;
+      gap: 22px;
       align-items: start;
     }
     @media (max-width: 760px) {
       .layout { grid-template-columns: 1fr; }
+      header { padding: 16px 16px 0; }
+      .search-strip { padding: 12px 16px; }
     }
 
     /* ── Sidebar ── */
@@ -124,39 +170,36 @@
       background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 18px 0;
+      padding: 16px 0;
       position: sticky;
-      top: 120px;
+      top: 148px;
     }
     .sidebar h2 {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted);
-      padding: 0 18px 10px;
+      padding: 0 16px 10px;
       border-bottom: 1px solid var(--border);
     }
-    .category-list { list-style: none; padding: 8px 0; }
+    .category-list { list-style: none; padding: 6px 0; }
     .category-list li button {
       width: 100%;
       text-align: left;
       background: none;
       border: none;
-      padding: 9px 18px;
-      font-size: 0.875rem;
+      padding: 8px 16px;
+      font-size: 0.855rem;
       color: var(--text);
       cursor: pointer;
       border-left: 3px solid transparent;
       transition: background 0.15s, border-color 0.15s, color 0.15s;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
     }
-    .category-list li button:hover {
-      background: var(--brand-light);
-      color: var(--brand);
-    }
+    .category-list li button:hover { background: var(--brand-light); color: var(--brand); }
     .category-list li button.active {
       background: var(--brand-light);
       color: var(--brand);
@@ -167,244 +210,395 @@
       margin-left: auto;
       background: var(--border);
       color: var(--muted);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       border-radius: 20px;
       padding: 1px 7px;
     }
-    .category-list li button.active .cat-count {
-      background: var(--brand);
-      color: #fff;
-    }
+    .category-list li button.active .cat-count { background: var(--brand); color: #fff; }
 
-    /* Contact card in sidebar */
     .contact-card {
-      margin: 12px 14px 0;
+      margin: 10px 12px 0;
       background: var(--brand-light);
       border-radius: 8px;
-      padding: 12px 14px;
+      padding: 11px 13px;
       border: 1px solid #c8d9f0;
     }
     .contact-card h3 {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--brand-dark);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
-    .contact-card p {
-      font-size: 0.8rem;
-      color: var(--brand-dark);
-      margin-bottom: 3px;
-    }
+    .contact-card p { font-size: 0.78rem; color: var(--brand-dark); margin-bottom: 2px; }
     .contact-card a { color: var(--brand); text-decoration: none; font-weight: 500; }
     .contact-card a:hover { text-decoration: underline; }
 
-    /* ── Main content ── */
+    /* ── Browse main ── */
     .main { min-width: 0; }
-
-    /* Result count */
-    .result-meta {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 16px;
-      min-height: 20px;
-    }
+    .result-meta { font-size: 0.82rem; color: var(--muted); margin-bottom: 14px; min-height: 20px; }
     .result-meta strong { color: var(--text); }
 
-    /* No results */
-    #noResults {
-      display: none;
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-    }
-    #noResults h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
-    #noResults p { font-size: 0.875rem; }
+    #noResults { display: none; text-align: center; padding: 60px 20px; color: var(--muted); }
+    #noResults h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text); }
 
     /* ── Issue card ── */
     .issue-card {
       background: var(--card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       border: 1px solid var(--border);
       overflow: hidden;
       transition: box-shadow 0.2s;
     }
     .issue-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.11); }
+    .issue-card.highlight-pulse { animation: pulse 1.2s ease; }
+    @keyframes pulse {
+      0%,100% { box-shadow: var(--shadow); }
+      40% { box-shadow: 0 0 0 4px rgba(0,87,168,0.25), 0 4px 18px rgba(0,0,0,0.1); }
+    }
 
     .card-header {
-      padding: 16px 20px;
+      padding: 15px 18px;
       cursor: pointer;
       display: flex;
       align-items: flex-start;
-      gap: 14px;
+      gap: 12px;
       user-select: none;
       transition: background 0.15s;
     }
     .card-header:hover { background: #fafbfd; }
-
     .card-icon {
-      width: 38px;
-      height: 38px;
+      width: 36px; height: 36px;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
     }
-
     .card-title-block { flex: 1; min-width: 0; }
-    .card-title-block h3 {
-      font-size: 0.975rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 3px;
-      line-height: 1.35;
-    }
-    .card-title-block .card-desc {
-      font-size: 0.815rem;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-    .badge {
-      font-size: 0.7rem;
-      font-weight: 700;
-      border-radius: 20px;
-      padding: 2px 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .chevron {
-      color: var(--muted);
-      transition: transform 0.25s;
-      flex-shrink: 0;
-    }
+    .card-title-block h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 2px; line-height: 1.35; }
+    .card-title-block .card-desc { font-size: 0.8rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .card-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .badge { font-size: 0.68rem; font-weight: 700; border-radius: 20px; padding: 2px 9px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .chevron { color: var(--muted); transition: transform 0.25s; flex-shrink: 0; }
     .issue-card.open .chevron { transform: rotate(180deg); }
 
-    /* Card body */
-    .card-body {
-      display: none;
-      padding: 0 20px 20px;
-      border-top: 1px solid var(--border);
-    }
+    .card-body { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); }
     .issue-card.open .card-body { display: block; }
 
     .section-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin: 16px 0 8px;
+      font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--muted); margin: 14px 0 7px;
     }
-
-    /* Steps */
     .steps { list-style: none; counter-reset: steps; }
     .steps li {
       counter-increment: steps;
-      display: flex;
-      gap: 12px;
-      margin-bottom: 10px;
-      font-size: 0.875rem;
+      display: flex; gap: 11px; margin-bottom: 9px; font-size: 0.865rem;
     }
     .steps li::before {
       content: counter(steps);
-      background: var(--brand);
-      color: #fff;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.72rem;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
+      background: var(--brand); color: #fff;
+      border-radius: 50%; width: 21px; height: 21px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 1px;
     }
-
-    /* Causes list */
     .causes { list-style: none; padding: 0; }
     .causes li {
-      font-size: 0.875rem;
-      padding: 5px 0 5px 18px;
-      position: relative;
-      color: var(--text);
+      font-size: 0.865rem; padding: 4px 0 4px 17px;
+      position: relative; color: var(--text);
     }
     .causes li::before {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 13px;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--muted);
+      content: ""; position: absolute; left: 4px; top: 12px;
+      width: 6px; height: 6px; border-radius: 50%; background: var(--muted);
     }
 
-    /* Info / warning / tip boxes */
     .info-box, .warn-box, .tip-box {
-      border-radius: 8px;
-      padding: 11px 14px;
-      font-size: 0.84rem;
-      margin-top: 10px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
+      border-radius: 8px; padding: 10px 13px;
+      font-size: 0.83rem; margin-top: 9px;
+      display: flex; gap: 9px; align-items: flex-start;
     }
     .info-box { background: var(--info-bg); border: 1px solid #90caf9; color: #0d47a1; }
-    .warn-box  { background: var(--warn-bg);  border: 1px solid #ef9a9a; color: var(--warn); }
-    .tip-box   { background: var(--tip-bg);   border: 1px solid var(--tip-border); color: #1b5e20; }
-    .info-box .box-icon, .warn-box .box-icon, .tip-box .box-icon {
-      font-size: 1rem;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
+    .warn-box  { background: var(--warn-bg); border: 1px solid #ef9a9a; color: var(--warn); }
+    .tip-box   { background: var(--tip-bg);  border: 1px solid var(--tip-border); color: #1b5e20; }
+    .info-box .box-icon, .warn-box .box-icon, .tip-box .box-icon { font-size: 0.95rem; flex-shrink: 0; margin-top: 1px; }
     .info-box p, .warn-box p, .tip-box p { margin: 0; line-height: 1.5; }
 
-    /* Highlight search term */
-    mark {
-      background: #fff176;
-      color: inherit;
-      border-radius: 2px;
-      padding: 0 1px;
-    }
+    mark { background: #fff176; color: inherit; border-radius: 2px; padding: 0 1px; }
 
-    /* Category color themes */
-    .cat-login   .card-icon { background: #e3f2fd; color: #1565c0; }
-    .cat-docs    .card-icon { background: #fce4ec; color: #880e4f; }
-    .cat-email   .card-icon { background: #e8f5e9; color: #2e7d32; }
-    .cat-cred    .card-icon { background: #fff3e0; color: #e65100; }
-    .cat-axuall  .card-icon { background: #f3e5f5; color: #6a1b9a; }
-    .cat-mobile  .card-icon { background: #e0f7fa; color: #006064; }
-    .cat-portal  .card-icon { background: #fafafa; color: #424242; }
+    /* Category themes */
+    .cat-login  .card-icon { background: #e3f2fd; color: #1565c0; }
+    .cat-docs   .card-icon { background: #fce4ec; color: #880e4f; }
+    .cat-email  .card-icon { background: #e8f5e9; color: #2e7d32; }
+    .cat-cred   .card-icon { background: #fff3e0; color: #e65100; }
+    .cat-axuall .card-icon { background: #f3e5f5; color: #6a1b9a; }
+    .cat-mobile .card-icon { background: #e0f7fa; color: #006064; }
+    .cat-portal .card-icon { background: #f5f5f5; color: #424242; }
 
-    .cat-login .badge  { background: #e3f2fd; color: #1565c0; }
-    .cat-docs .badge   { background: #fce4ec; color: #880e4f; }
-    .cat-email .badge  { background: #e8f5e9; color: #2e7d32; }
-    .cat-cred .badge   { background: #fff3e0; color: #e65100; }
+    .cat-login  .badge { background: #e3f2fd; color: #1565c0; }
+    .cat-docs   .badge { background: #fce4ec; color: #880e4f; }
+    .cat-email  .badge { background: #e8f5e9; color: #2e7d32; }
+    .cat-cred   .badge { background: #fff3e0; color: #e65100; }
     .cat-axuall .badge { background: #f3e5f5; color: #6a1b9a; }
     .cat-mobile .badge { background: #e0f7fa; color: #006064; }
-    .cat-portal .badge { background: #fafafa; color: #424242; border: 1px solid #ddd; }
+    .cat-portal .badge { background: #f5f5f5; color: #424242; border: 1px solid #ddd; }
 
-    /* Footer */
+    /* ── Chat panel ── */
+    #chatPanel {
+      max-width: 820px;
+      margin: 28px auto 0;
+      padding: 0 20px 60px;
+    }
+
+    .chat-window {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 200px);
+      min-height: 500px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scroll-behavior: smooth;
+    }
+
+    /* Message rows */
+    .msg-row { display: flex; gap: 10px; align-items: flex-start; }
+    .msg-row.user { flex-direction: row-reverse; }
+
+    .avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+    }
+    .avatar.bot { background: var(--brand); color: #fff; }
+    .avatar.user { background: #e3f2fd; color: var(--brand); font-size: 0.75rem; }
+
+    .bubble {
+      max-width: 80%;
+      border-radius: 14px;
+      padding: 11px 15px;
+      font-size: 0.875rem;
+      line-height: 1.55;
+    }
+    .bubble.bot {
+      background: #f8f9fc;
+      border: 1px solid var(--border);
+      border-top-left-radius: 4px;
+      color: var(--text);
+    }
+    .bubble.user {
+      background: var(--brand);
+      color: #fff;
+      border-top-right-radius: 4px;
+    }
+
+    /* Chat result card inside bubble */
+    .chat-result-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .chat-result-card .crc-header {
+      background: var(--brand-light);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border-bottom: 1px solid var(--border);
+    }
+    .chat-result-card .crc-icon {
+      font-size: 1.1rem;
+    }
+    .chat-result-card .crc-title {
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--brand-dark);
+      flex: 1;
+    }
+    .chat-result-card .crc-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 2px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .chat-result-card .crc-body {
+      padding: 12px 14px;
+    }
+    .chat-result-card .crc-steps {
+      list-style: none;
+      counter-reset: csteps;
+      margin: 0;
+      padding: 0;
+    }
+    .chat-result-card .crc-steps li {
+      counter-increment: csteps;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.845rem;
+      color: var(--text);
+    }
+    .chat-result-card .crc-steps li::before {
+      content: counter(csteps);
+      background: var(--brand); color: #fff;
+      border-radius: 50%; width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+    .chat-result-card .crc-warn {
+      background: var(--warn-bg); border: 1px solid #ef9a9a;
+      border-radius: 7px; padding: 8px 11px;
+      font-size: 0.815rem; color: var(--warn);
+      margin-top: 9px; line-height: 1.45;
+    }
+    .chat-result-card .crc-tip {
+      background: var(--tip-bg); border: 1px solid var(--tip-border);
+      border-radius: 7px; padding: 8px 11px;
+      font-size: 0.815rem; color: #1b5e20;
+      margin-top: 9px; line-height: 1.45;
+    }
+    .view-browse-btn {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: var(--brand);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .view-browse-btn:hover { text-decoration: underline; }
+
+    .also-related {
+      margin-top: 10px;
+      font-size: 0.815rem;
+      color: var(--muted);
+    }
+    .also-related strong { color: var(--text); font-size: 0.82rem; }
+    .related-chip {
+      display: inline-block;
+      background: var(--brand-light);
+      color: var(--brand);
+      border: 1px solid #c8d9f0;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 4px 4px 0 0;
+      transition: background 0.15s;
+    }
+    .related-chip:hover { background: #d0e4f7; }
+
+    /* Suggestions */
+    .suggestions-wrap {
+      padding: 0 0 4px;
+    }
+    .suggestions-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .suggestion-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .suggestion-chip {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 13px;
+      font-size: 0.8rem;
+      color: var(--brand);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .suggestion-chip:hover {
+      background: var(--brand-light);
+      border-color: var(--brand);
+    }
+
+    /* Typing indicator */
+    .typing-indicator .bubble {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 14px 16px;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--muted);
+      animation: bounce 1.2s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%,60%,100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    /* Chat footer */
+    .chat-footer {
+      border-top: 1px solid var(--border);
+      padding: 14px 16px;
+      display: flex;
+      gap: 10px;
+      background: #fff;
+    }
+    #chatInput {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: var(--bg);
+    }
+    #chatInput:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0,87,168,0.1); background: #fff; }
+    #chatSend {
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    #chatSend:hover { background: var(--brand-dark); }
+    #chatSend:disabled { opacity: 0.5; cursor: not-allowed; }
+
     footer {
       text-align: center;
-      padding: 20px;
-      font-size: 0.78rem;
+      padding: 18px;
+      font-size: 0.75rem;
       color: var(--muted);
       border-top: 1px solid var(--border);
       margin-top: 20px;
@@ -414,90 +608,94 @@
 <body>
 
 <header>
-  <div class="header-inner">
-    <h1>TechOps Provider Support Guide</h1>
-    <p class="subtitle">LocumTenens.com &mdash; Self-service reference for Recruiters &amp; CRs</p>
-    <div class="search-wrap">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="searchInput" placeholder="Search by keyword, issue, or topic&hellip;" autocomplete="off" />
-      <button id="clearSearch" title="Clear search" aria-label="Clear search">&times;</button>
+  <div class="header-top">
+    <div class="header-title">
+      <h1>TechOps Provider Support Guide</h1>
+      <p>LocumTenens.com &mdash; Internal reference for Recruiters &amp; CRs</p>
     </div>
+    <nav class="tab-nav">
+      <button class="active" data-tab="browse" id="tabBrowse">Browse Issues</button>
+      <button data-tab="chat" id="tabChat">Ask a Question</button>
+    </nav>
   </div>
 </header>
 
-<div class="layout">
-
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <h2>Browse by Category</h2>
-    <ul class="category-list" id="categoryList">
-      <li><button class="active" data-cat="all">
-        <span>All Issues</span>
-        <span class="cat-count" id="cnt-all">0</span>
-      </button></li>
-      <li><button data-cat="login">
-        <span>Login &amp; Account</span>
-        <span class="cat-count" id="cnt-login">0</span>
-      </button></li>
-      <li><button data-cat="docs">
-        <span>Documents</span>
-        <span class="cat-count" id="cnt-docs">0</span>
-      </button></li>
-      <li><button data-cat="email">
-        <span>Email &amp; Invites</span>
-        <span class="cat-count" id="cnt-email">0</span>
-      </button></li>
-      <li><button data-cat="cred">
-        <span>Credentialing</span>
-        <span class="cat-count" id="cnt-cred">0</span>
-      </button></li>
-      <li><button data-cat="axuall">
-        <span>Axuall</span>
-        <span class="cat-count" id="cnt-axuall">0</span>
-      </button></li>
-      <li><button data-cat="mobile">
-        <span>Mobile &amp; Browser</span>
-        <span class="cat-count" id="cnt-mobile">0</span>
-      </button></li>
-      <li><button data-cat="portal">
-        <span>Portal &amp; Tabs</span>
-        <span class="cat-count" id="cnt-portal">0</span>
-      </button></li>
-    </ul>
-
-    <div class="contact-card">
-      <h3>Escalate to TechOps</h3>
-      <p>Manager: Kelly Thompson</p>
-      <p><a href="mailto:techopshelpdesk@locumtenens.com">techopshelpdesk@locumtenens.com</a></p>
-      <p>Phone: <a href="tel:8777327080">877-732-7080</a></p>
-      <p style="margin-top:6px;font-size:0.75rem;opacity:0.8;">Include: Provider Name, Issue Description, SF Link, Screenshots</p>
-    </div>
-  </aside>
-
-  <!-- Main -->
-  <main class="main">
-    <p class="result-meta" id="resultMeta"></p>
-    <div id="issueList"></div>
-    <div id="noResults">
-      <h3>No results found</h3>
-      <p>Try different keywords or browse by category using the sidebar.</p>
-    </div>
-  </main>
-
+<!-- Search strip (Browse only) -->
+<div class="search-strip" id="searchStrip">
+  <div class="search-inner">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Search issues by keyword, topic, or symptom&hellip;" autocomplete="off" />
+    <button id="clearSearch" title="Clear">&times;</button>
+  </div>
 </div>
 
-<footer>
-  TechOps Provider Support Guide &mdash; LocumTenens.com &mdash; Internal Use Only
-</footer>
+<!-- ── BROWSE PANEL ── -->
+<div id="browsePanel" class="panel active">
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Categories</h2>
+      <ul class="category-list" id="categoryList">
+        <li><button class="active" data-cat="all">All Issues <span class="cat-count" id="cnt-all">0</span></button></li>
+        <li><button data-cat="login">Login &amp; Account <span class="cat-count" id="cnt-login">0</span></button></li>
+        <li><button data-cat="docs">Documents <span class="cat-count" id="cnt-docs">0</span></button></li>
+        <li><button data-cat="email">Email &amp; Invites <span class="cat-count" id="cnt-email">0</span></button></li>
+        <li><button data-cat="cred">Credentialing <span class="cat-count" id="cnt-cred">0</span></button></li>
+        <li><button data-cat="axuall">Axuall <span class="cat-count" id="cnt-axuall">0</span></button></li>
+        <li><button data-cat="mobile">Mobile &amp; Browser <span class="cat-count" id="cnt-mobile">0</span></button></li>
+        <li><button data-cat="portal">Portal &amp; Tabs <span class="cat-count" id="cnt-portal">0</span></button></li>
+      </ul>
+      <div class="contact-card">
+        <h3>Escalate to TechOps</h3>
+        <p>Manager: Kelly Thompson</p>
+        <p><a href="mailto:techopshelpdesk@locumtenens.com">techopshelpdesk@locumtenens.com</a></p>
+        <p>Phone: <a href="tel:8777327080">877-732-7080</a></p>
+        <p style="margin-top:6px;font-size:0.73rem;opacity:0.8;">Include: Provider Name, Issue, SF Link, Screenshots</p>
+      </div>
+    </aside>
+    <main class="main">
+      <p class="result-meta" id="resultMeta"></p>
+      <div id="issueList"></div>
+      <div id="noResults"><h3>No results found</h3><p>Try different keywords or browse by category.</p></div>
+    </main>
+  </div>
+</div>
+
+<!-- ── CHAT PANEL ── -->
+<div id="chatPanel" class="panel">
+  <div class="chat-window">
+    <div class="chat-messages" id="chatMessages">
+      <!-- Welcome message injected by JS -->
+    </div>
+    <div class="chat-footer">
+      <input type="text" id="chatInput" placeholder="Describe the issue in your own words&hellip;" autocomplete="off" />
+      <button id="chatSend">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Send
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer>TechOps Provider Support Guide &mdash; LocumTenens.com &mdash; Internal Use Only</footer>
 
 <script>
+// ─────────────────────────────────────────────
+//  ISSUES DATABASE
+// ─────────────────────────────────────────────
 const ISSUES = [
   {
-    id: 1,
-    category: "docs",
-    icon: "📄",
+    id: 1, category: "docs", icon: "📄",
     title: "Provider Cannot Open or Upload Documents",
     description: "Documents won't open, downloads are blocked, or uploads fail.",
+    keywords: [
+      "upload", "document", "file", "open document", "cannot upload", "cant upload",
+      "upload fail", "upload not working", "wont upload", "download blocked",
+      "sharepoint", "pdf", "docx", "attachment", "vpn", "security restriction",
+      "organization block", "wont open", "file not opening", "cannot open",
+      "upload issue", "file upload", "file type", "wrong format", "headshot",
+      "document blocked", "download not working", "file blocked", "file format",
+      "cant open document", "file wont open", "document wont open"
+    ],
     causes: [
       "Organization security restrictions on email or SharePoint",
       "VPN interference (provider may be connected to a VPN)",
@@ -510,18 +708,22 @@ const ISSUES = [
       "Have them attempt the upload from a <strong>different device or network</strong>.",
       "If the issue persists and an error references organizational blocking, <strong>escalate to TechOps</strong> for an email/security review."
     ],
-    tips: [
-      "Documents must be in <strong>.pdf</strong> or <strong>.docx</strong> format. Headshots should be in <strong>.jpg</strong>, <strong>.png</strong>, or another accepted image format."
-    ],
-    warnings: [],
-    notes: []
+    tips: ["Documents must be in <strong>.pdf</strong> or <strong>.docx</strong> format. Headshots should be in <strong>.jpg</strong>, <strong>.png</strong>, or another accepted image format."],
+    warnings: [], notes: []
   },
   {
-    id: 2,
-    category: "email",
-    icon: "✉️",
+    id: 2, category: "email", icon: "✉️",
     title: "Provider Not Receiving Emails (Invites, Codes, Links)",
     description: "Provider is not receiving login codes, invites, or system emails.",
+    keywords: [
+      "email", "not receiving email", "no email", "missing email", "invite",
+      "invitation", "verification code", "login code", "code", "spam", "junk folder",
+      "junk", "lt_onlineservices", "onlineservices", "code not received",
+      "not getting email", "email not arriving", "never received", "didnt receive",
+      "no invite", "resend invite", "resend code", "not getting code",
+      "not getting invite", "email not coming", "missing invite", "missing code",
+      "not receiving invite", "invite not sent", "email never came"
+    ],
     causes: [],
     steps: [
       "Confirm the <strong>email on file in Salesforce</strong> is correct.",
@@ -530,53 +732,63 @@ const ISSUES = [
       "<strong>Resend</strong> the invite or verification code.",
       "If still not received, recommend adding <strong>LT_OnlineServices@locumtenens.com</strong> to their safe sender list."
     ],
-    tips: [],
-    warnings: [],
-    notes: []
+    tips: [], warnings: [], notes: []
   },
   {
-    id: 3,
-    category: "portal",
-    icon: "🔍",
+    id: 3, category: "portal", icon: "🔍",
     title: "Clinician Portal Verification Confusion",
     description: "Provider believes they are credentialed or invited but cannot proceed.",
+    keywords: [
+      "portal verification", "clinician portal", "verified account", "already invited",
+      "cannot proceed", "invited but cant", "invite only", "think they are credentialed",
+      "believe they are credentialed", "portal verified", "account verified",
+      "lt online experience", "lt online invite", "online experience",
+      "verification confusion", "invited but not credentialed", "why cant they proceed",
+      "sent invite but", "provider says they verified", "already verified"
+    ],
     causes: [],
     steps: [
       "Clarify that the <strong>LT Online Experience invite only verifies the account</strong> — it does not start the credentialing process.",
       "Direct the provider to follow the <em>How to Access the Credentialing Application</em> steps to begin credentialing in Axuall."
     ],
-    tips: [],
-    warnings: [],
-    notes: [
-      "The LT Online Experience invite verifies the account only. It does <strong>not</strong> initiate credentialing. Credentialing must be started separately through Axuall."
-    ]
+    tips: [], warnings: [],
+    notes: ["The LT Online Experience invite verifies the account only. It does <strong>not</strong> initiate credentialing. Credentialing must be started separately through Axuall."]
   },
   {
-    id: 4,
-    category: "mobile",
-    icon: "📱",
-    title: "Mobile Credentialing Access Error (\"Something Is Broken\")",
-    description: "Provider gets an error when completing credentialing on a mobile device.",
-    causes: [
-      "Known mobile compatibility issue with the credentialing portal"
+    id: 4, category: "mobile", icon: "📱",
+    title: "Mobile Credentialing Error (\"Something Is Definitely Broken\")",
+    description: "Provider gets a broken error message when trying to credential on a mobile device.",
+    keywords: [
+      "mobile", "phone", "cell phone", "iphone", "android", "smartphone",
+      "something is broken", "something is definitely broken", "oh no something",
+      "broken on mobile", "mobile error", "credentialing on phone", "phone error",
+      "tablet", "mobile device", "mobile compatibility", "error on phone",
+      "broken message", "oh no", "definitely broken", "error message phone",
+      "mobile issue", "phone issue", "cant credential on phone"
     ],
+    causes: ["Known mobile compatibility issue with the credentialing portal"],
     steps: [
       "Reassure the provider — <strong>nothing is actually broken</strong>. This is a known mobile compatibility issue.",
       "Direct the provider to use the <strong>direct credentialing link</strong> on their phone: <code>https://portal.locumtenens.com/#/credentials/overview</code>",
       "If possible, encourage them to switch to a <strong>desktop or laptop</strong> for the most reliable experience."
     ],
-    tips: [
-      "Completing credentialing on a desktop or laptop is always recommended for the best experience."
-    ],
-    warnings: [],
-    notes: []
+    tips: ["Completing credentialing on a desktop or laptop is always recommended for the best experience."],
+    warnings: [], notes: []
   },
   {
-    id: 5,
-    category: "login",
-    icon: "🔒",
-    title: "Incorrect Username or Password / Locked Account",
+    id: 5, category: "login", icon: "🔒",
+    title: "Incorrect Username / Password or Locked Account",
     description: "Provider cannot log in due to incorrect credentials or a locked LTOE account.",
+    keywords: [
+      "password", "forgot password", "reset password", "wrong password",
+      "incorrect password", "locked", "locked out", "account locked", "lock",
+      "cannot log in", "cant log in", "login error", "sign in error",
+      "wrong credentials", "password error", "username error", "locked account",
+      "30 minutes", "unlock account", "cant sign in", "cannot sign in",
+      "login not working", "login failed", "sign in failed", "password not working",
+      "wrong username", "incorrect username", "account not unlocking",
+      "how to reset password", "cant access account", "locked out of account"
+    ],
     causes: [],
     steps: [
       "On the login screen, click <strong>\"Forgot your password?\"</strong>",
@@ -586,325 +798,344 @@ const ISSUES = [
       "Log in using the newly created password."
     ],
     tips: [],
-    warnings: [
-      "TechOps <strong>cannot manually unlock</strong> a locked account. Resetting the password will automatically unlock it, OR the provider may wait <strong>30 minutes</strong> for the lock to clear on its own."
-    ],
+    warnings: ["TechOps <strong>cannot manually unlock</strong> a locked account. Resetting the password will automatically unlock it, OR the provider may wait <strong>30 minutes</strong> for the lock to clear on its own."],
     notes: []
   },
   {
-    id: 6,
-    category: "portal",
-    icon: "🗂️",
+    id: 6, category: "portal", icon: "🗂️",
     title: "Missing Credentials Tab in LTOE",
     description: "Provider cannot see the Credentials tab in their LTOE account.",
+    keywords: [
+      "credentials tab", "missing tab", "no credentials tab", "cant see credentials",
+      "credentials not showing", "credentials tab missing", "credentials tab gone",
+      "tab missing", "username mismatch", "email mismatch", "ltoe username",
+      "username doesnt match", "username not matching", "missing credentials",
+      "credentials tab not appearing", "credentials not visible", "no credentials",
+      "credentials tab not there", "where is credentials tab",
+      "credentials tab disappeared", "tab not showing", "cant find credentials",
+      "credential tab missing", "no credential tab", "ltoe mismatch"
+    ],
     causes: [
-      "LTOE username and Salesforce email do not match — these must be identical for proper access",
+      "LTOE username and Salesforce email do not match — these must be identical",
       "Clinician Portal is not yet verified — an unverified portal prevents the Credentials tab from appearing"
     ],
     steps: [
       "Open the provider's record in <strong>Salesforce</strong> and click the <strong>Details</strong> tab.",
       "Locate the <strong>LTOE Username</strong> field and confirm it matches the provider's email exactly.",
-      "To check portal verification: go to the provider's Salesforce page &rarr; Details tab &rarr; scroll to <strong>Clinician Portal Verification</strong>.",
-      "If the email and LTOE username do not match, submit a ticket to <a href='mailto:lthelpdesk@locumtenens.com'>lthelpdesk@locumtenens.com</a> to request the change.",
+      "To check portal verification: Salesforce &rarr; Details tab &rarr; scroll to <strong>Clinician Portal Verification</strong>.",
+      "If the email and LTOE username do not match, submit a ticket to <a href='mailto:lthelpdesk@locumtenens.com'>lthelpdesk@locumtenens.com</a>.",
       "If the portal is unverified, resend the LT Online Experience invite so the provider can verify their account."
     ],
     tips: [],
-    warnings: [
-      "A provider's email in Salesforce <strong>cannot</strong> be changed if their portal is already verified. A ticket must be submitted to LT Helpdesk to request this change."
-    ],
-    notes: [
-      "Providers may still be able to log in even if the email and username don't match, but this often causes system glitches or missing functionality."
-    ]
+    warnings: ["A provider's email in Salesforce <strong>cannot</strong> be changed if their portal is already verified. A ticket must be submitted to LT Helpdesk to request this change."],
+    notes: ["Providers may still be able to log in even if the email and username don't match, but this often causes missing functionality."]
   },
   {
-    id: 7,
-    category: "cred",
-    icon: "📋",
+    id: 7, category: "cred", icon: "📋",
     title: "How to Access the Credentialing Application",
-    description: "Step-by-step guide for providers to access their credentialing application through LTOE and Axuall.",
+    description: "Step-by-step guide for providers to access their credentialing application via LTOE and Axuall.",
+    keywords: [
+      "access credentialing", "credentialing application", "begin credentialing",
+      "start credentialing", "get started credentialing", "npi", "npi number",
+      "credentialing overview", "how to credential", "credential application",
+      "how to access axuall", "get into axuall", "axuall redirect", "authenticate",
+      "authenticate account", "authentication", "how to start credentialing",
+      "credentialing link", "access credentials", "open credentialing",
+      "begin credentials", "provider portal access", "cant start credentialing",
+      "how do they start", "where do they go to credential"
+    ],
     causes: [],
     steps: [
       "Log in at <a href='https://www.locumtenens.com/' target='_blank'>www.locumtenens.com</a> using the <strong>email on file in Salesforce</strong> and the associated password.",
       "Click <strong>CREDENTIALS</strong> from the top navigation.",
       "Select <strong>Credentialing Overview</strong>.",
-      "The provider will see one of the following prompts:<br>&bull; \"Before you begin credentialing, please gather the following information\" &rarr; Verify NPI and click <strong>Get Started</strong><br>&bull; Click <strong>\"Authenticate your account\"</strong>",
-      "The provider will be <strong>automatically redirected</strong> to begin their credentialing application in Axuall."
+      "The provider will see one of the following:<br>&bull; Verify NPI &rarr; click <strong>Get Started</strong><br>&bull; Click <strong>\"Authenticate your account\"</strong>",
+      "The provider will be <strong>automatically redirected</strong> to begin their credentialing in Axuall."
     ],
     tips: [
-      "Google Chrome is recommended and resolves most access issues.",
-      "Clearing browser cache can fix slow loading, blank screens, or looping behavior.",
+      "Google Chrome is recommended.",
+      "Clear browser cache if experiencing slow loading, blank screens, or looping.",
       "Axuall requires <strong>third-party cookies</strong> to be enabled.",
-      "If still blocked, have the provider try from a different device (laptop, desktop, smartphone, or tablet)."
+      "If still blocked, try a different device."
     ],
-    warnings: [],
-    notes: []
+    warnings: [], notes: []
   },
   {
-    id: 8,
-    category: "cred",
-    icon: "🔄",
+    id: 8, category: "mobile", icon: "🍪",
+    title: "Authenticate Button Not Working / Axuall Won't Load (Pop-Up Blocker or Cookies)",
+    description: "Clicking 'Authenticate your account' does nothing, or Axuall fails to open after the redirect.",
+    keywords: [
+      "authenticate button", "authenticate button not working", "nothing happens",
+      "click authenticate", "button not working", "button doesnt work",
+      "pop-up blocker", "popup blocker", "pop up blocker", "popups", "pop ups",
+      "third party cookies", "third-party cookies", "cookies blocked", "cookies disabled",
+      "enable cookies", "allow cookies", "new tab blocked", "redirect blocked",
+      "axuall wont load", "axuall not loading", "cant get into axuall",
+      "axuall not opening", "axuall wont open", "blank page axuall",
+      "axuall blank", "axuall page not loading", "wont redirect",
+      "redirect not working", "stuck on authenticate", "authenticate does nothing",
+      "nothing happens when i click", "click and nothing happens", "button click nothing",
+      "axuall blocked", "allow popups", "allow pop ups", "axuall isnt opening",
+      "axuall doesnt open", "cant access axuall", "axuall access denied",
+      "axuall not accessible", "provider cant get into axuall"
+    ],
+    causes: [
+      "Pop-up blocker preventing the Axuall tab from opening",
+      "Third-party cookies disabled — Axuall requires these to function",
+      "Browser incompatibility (Chrome is strongly recommended)",
+      "Browser cache causing redirect failure"
+    ],
+    steps: [
+      "Check for a <strong>pop-up blocked notification</strong> in the browser address bar — click it and select <strong>\"Always allow pop-ups from locumtenens.com\"</strong>.",
+      "Enable <strong>third-party cookies</strong>: Chrome &rarr; Settings &rarr; Privacy and Security &rarr; Cookies &rarr; Allow third-party cookies.",
+      "In Chrome: Settings &rarr; Privacy &rarr; Site Settings &rarr; Pop-ups and redirects &rarr; <strong>Allow locumtenens.com</strong>.",
+      "Have the provider <strong>clear their browser cache</strong> and try again.",
+      "If still not working, try a <strong>different browser</strong> (Chrome recommended) or a different device."
+    ],
+    tips: ["This is one of the most common reasons the Authenticate button appears to do nothing. <strong>Always check pop-up blocker first.</strong>"],
+    warnings: [], notes: []
+  },
+  {
+    id: 9, category: "cred", icon: "🔄",
     title: "How to Re-Credential",
     description: "Guide for providers to access their re-credentialing application through LTOE and Axuall.",
+    keywords: [
+      "re-credential", "re credential", "recredential", "re-cred", "recred",
+      "credentialing again", "renewal", "start re-credentialing",
+      "re-credentialing application", "redo credentialing", "credential renewal",
+      "re cred", "start re credentialing", "how to re-credential",
+      "re credentialing", "renew credentials", "credential again", "recredentialing"
+    ],
     causes: [],
     steps: [
-      "Log in at <a href='https://www.locumtenens.com/' target='_blank'>www.locumtenens.com</a> using the <strong>email on file in Salesforce</strong> and the associated password.",
+      "Log in at <a href='https://www.locumtenens.com/' target='_blank'>www.locumtenens.com</a> using the <strong>email on file in Salesforce</strong>.",
       "Click <strong>CREDENTIALS</strong> from the top navigation.",
       "Select <strong>Credentialing Overview</strong>.",
       "Click <strong>\"Start my re-credentialing application\"</strong>.",
       "The provider will be <strong>automatically redirected</strong> to begin their re-credentialing in Axuall."
     ],
     tips: [
-      "Google Chrome is recommended and resolves most access issues.",
-      "Clearing browser cache can fix slow loading, blank screens, or looping behavior.",
-      "Axuall requires <strong>third-party cookies</strong> to be enabled.",
-      "Try a different device if the issue persists."
+      "Google Chrome is recommended.",
+      "Clear browser cache if experiencing slow loading or looping.",
+      "Axuall requires third-party cookies to be enabled."
     ],
-    warnings: [],
-    notes: []
+    warnings: [], notes: []
   },
   {
-    id: 9,
-    category: "axuall",
-    icon: "🪪",
+    id: 10, category: "axuall", icon: "🪪",
     title: "Axuall Identity Verification Error",
     description: "Provider cannot complete identity verification in Axuall during credentialing or re-credentialing.",
+    keywords: [
+      "identity verification", "verify identity", "identity failed",
+      "verification failed", "unable to verify", "name mismatch", "name doesnt match",
+      "wrong name", "dob", "date of birth", "ssn", "social security",
+      "social security number", "government id", "id mismatch",
+      "stuck on verification", "looped back", "identity error", "verification loop",
+      "axuall identity", "axuall verification", "888-298-1730", "axuall support",
+      "identity check failed", "we were unable to verify", "identity verification failed",
+      "middle name", "maiden name", "suffix", "hyphenated name", "name on id",
+      "wrong dob", "wrong ssn", "blocked from moving forward", "cant proceed identity",
+      "keeps looping", "looping back", "verification screen loop", "looped on identity"
+    ],
     causes: [
-      "<strong>Name mismatch:</strong> Name in Axuall does not exactly match the government-issued ID (middle name vs. initial, maiden vs. married name, hyphenated names, suffixes like Jr./Sr./III)",
-      "<strong>DOB mismatch:</strong> Date of birth entered incorrectly in Axuall",
-      "<strong>SSN mismatch:</strong> Typo or transposed numbers in the Social Security Number"
+      "<strong>Name mismatch:</strong> Name in Axuall doesn't exactly match government-issued ID (middle name vs. initial, maiden vs. married, hyphenated names, suffixes like Jr./Sr./III)",
+      "<strong>DOB mismatch:</strong> Date of birth entered incorrectly",
+      "<strong>SSN mismatch:</strong> Typo or transposed numbers in Social Security Number"
     ],
     steps: [
-      "Inform the provider this is an identity verification issue that <strong>LocumTenens cannot resolve</strong> on their behalf, as it involves sensitive personal information.",
+      "Inform the provider that <strong>LocumTenens cannot resolve this on their behalf</strong> — it involves sensitive personal information.",
       "Direct the provider to contact <strong>Axuall Support</strong> directly: <strong>888-298-1730</strong>.",
-      "If Axuall Support cannot resolve the issue, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>TechOpsHelpdesk@locumtenens.com</a>."
+      "If Axuall Support cannot resolve it, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>TechOpsHelpdesk@locumtenens.com</a>."
     ],
     tips: [],
-    warnings: [
-      "Axuall is extremely literal — even minor discrepancies (a missing suffix, middle initial vs. full name) will cause verification to fail. The provider must contact Axuall Support directly."
-    ],
-    notes: [
-      "Common error messages: \"Identity verification failed\", \"We were unable to verify your identity\", or being looped back to the identity verification screen."
-    ]
+    warnings: ["Axuall is extremely literal — even minor discrepancies (missing suffix, middle initial vs. full name) will cause failure. The provider <strong>must</strong> contact Axuall Support at 888-298-1730."],
+    notes: ["Common error messages: \"Identity verification failed\", \"We were unable to verify your identity\", or being looped back to the verification screen."]
   },
   {
-    id: 10,
-    category: "docs",
-    icon: "🗃️",
-    title: "Document Library — What It Is &amp; How It Works",
-    description: "Understanding the Document Library and common provider confusion around document uploads.",
+    id: 11, category: "docs", icon: "🗃️",
+    title: "Document Library — How It Works",
+    description: "Understanding the Document Library and why uploaded documents may not appear in Axuall.",
+    keywords: [
+      "document library", "library", "documents not appearing", "uploaded but not showing",
+      "documents not in axuall", "where to upload documents", "upload after credentialing",
+      "documents missing from axuall", "library not working", "documents disappeared",
+      "doc library", "documents not showing", "uploaded document missing",
+      "cant find documents", "where did documents go", "documents not visible",
+      "upload location", "where to upload", "documents not found",
+      "document not in axuall", "cant access document library"
+    ],
     causes: [
-      "Provider tries to upload documents before completing their credentialing application",
-      "Provider cannot be found in Axuall Admin Center",
-      "Documents uploaded but not appearing in Axuall"
+      "Provider uploaded documents before completing their credentialing application",
+      "Provider has not yet credentialed with LocumTenens.com",
+      "Documents uploaded before credentialing is complete will not appear in Axuall"
     ],
     steps: [
-      "Clarify that the <strong>Document Library is for uploading additional documents AFTER the credentialing application is complete</strong>.",
-      "If a provider hasn't credentialed yet, LTOE will automatically redirect them to the <strong>Credentialing Overview</strong> tab.",
-      "If documents are not appearing in Axuall, verify that the provider has <strong>finished the credentialing application</strong> first.",
-      "If the provider cannot be found in the Axuall Admin Center, <strong>request a screenshot</strong> of what they are seeing to determine if they are still completing the application or attempting to upload documents prematurely."
+      "Clarify that the Document Library is for <strong>uploading additional documents AFTER the credentialing application is complete</strong>.",
+      "If the provider hasn't credentialed yet, LTOE will automatically redirect them to <strong>Credentialing Overview</strong>.",
+      "Verify the provider has <strong>fully submitted their credentialing application</strong> before expecting documents to appear.",
+      "If documents aren't appearing in Axuall, confirm credentialing is complete first.",
+      "If the provider cannot be found in Axuall Admin Center, <strong>request a screenshot</strong> of what they see."
     ],
     tips: [],
     warnings: [],
     notes: [
-      "Think of it this way: the Document Library is the <em>filing cabinet</em>; Credentialing is the <em>audit and verification process</em>. Having documents in the library does <strong>not</strong> mean a provider is credentialed.",
-      "Documents uploaded before the credentialing application is finished <strong>will not appear in Axuall</strong>."
+      "Think of it: the Document Library is the <em>filing cabinet</em>; Credentialing is the <em>audit and verification process</em>. Having documents in the library does <strong>not</strong> mean a provider is credentialed.",
+      "Documents uploaded <strong>before</strong> credentialing is finished will not appear in Axuall."
     ]
   },
   {
-    id: 11,
-    category: "axuall",
-    icon: "🤖",
-    title: "What Axuall Pre-Populates vs. What Providers Must Enter Manually",
-    description: "Understanding which fields auto-populate in the Axuall credentialing application.",
+    id: 12, category: "axuall", icon: "🤖",
+    title: "Axuall Fields Not Pre-Populating",
+    description: "Provider reports that information is not auto-filling in their Axuall credentialing application.",
+    keywords: [
+      "auto populate", "auto-populate", "pre-populate", "pre populate",
+      "not filling in", "fields empty", "information not filling", "blank fields",
+      "not auto filling", "manual entry", "axuall not pre-populating",
+      "why isnt filling", "wont pre-populate", "fields not populating",
+      "information not pre-populating", "nothing pre-fills", "not autofilling",
+      "data not filling", "why is it blank", "fields blank", "not auto populated",
+      "why arent fields filled", "information missing from application",
+      "application not filling in", "info not auto populating"
+    ],
     causes: [],
     steps: [
-      "Inform the provider that Axuall <strong>auto-populates primary source data</strong> such as licenses, certifications, and verified identity/demographics.",
-      "Remind them that <strong>personal contact info, attestation questions, malpractice history, narrative answers, and signature fields</strong> must be entered manually.",
-      "For <strong>employment history and facility affiliations</strong>, Axuall may pre-fill partial data but the provider must review and correct dates, roles, and facility names.",
-      "If information is not pre-populating, confirm that the provider has completed <strong>identity verification</strong> in Axuall, as this unlocks demographic auto-fill."
+      "Confirm the provider has completed <strong>identity verification</strong> in Axuall — demographics only auto-fill after this step.",
+      "Remind the provider that <strong>personal contact info, attestation questions, and narrative fields must be entered manually</strong>.",
+      "Explain that <strong>employment history and facility affiliations</strong> may partially pre-fill but require the provider to review and correct.",
+      "If license or certification data is missing after identity verification, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>TechOps</a>."
     ],
     tips: [],
     warnings: [],
     notes: [
       "<strong>Auto-populates:</strong> State licenses, expiration dates, board certifications, DEA, BLS/ACLS/PALS, NPI, name, DOB (after identity verification).",
-      "<strong>Does NOT auto-populate:</strong> Preferred phone, home/mailing address, attestation questions (disciplinary history, convictions), malpractice explanations, narrative/explanation fields."
+      "<strong>Does NOT auto-populate:</strong> Preferred phone, home/mailing address, attestation questions, malpractice explanations, and all narrative/explanation fields."
     ]
   },
   {
-    id: 12,
-    category: "cred",
-    icon: "⏱️",
-    title: "Credentialing Documents Taking Too Long to Appear in Salesforce",
-    description: "Credentialing documents submitted in Axuall are not yet visible in Salesforce.",
-    causes: [
-      "Normal system sync delay between Axuall and Salesforce"
+    id: 13, category: "cred", icon: "⏱️",
+    title: "Credentialing Documents Not Showing in Salesforce (Sync Delay)",
+    description: "Documents submitted in Axuall are not yet visible in Salesforce.",
+    keywords: [
+      "sync", "not in salesforce", "missing from salesforce", "not showing in salesforce",
+      "24 hours", "delay", "documents not syncing", "sync delay", "how long to sync",
+      "when will it appear", "still not showing", "not appearing in salesforce",
+      "salesforce sync", "documents not updating", "when does it sync",
+      "axuall to salesforce", "salesforce not updated", "documents missing salesforce",
+      "not transferred", "documents havent synced", "why arent documents in salesforce"
     ],
+    causes: ["Normal system sync delay between Axuall and Salesforce"],
     steps: [
       "Reassure the recruiter or CR that this is <strong>expected behavior</strong>.",
       "Credentialing documents can take <strong>up to 24 hours</strong> to sync from Axuall to Salesforce.",
-      "Do not open a support case or report missing documents until the 24-hour window has passed.",
-      "If documents are still missing after 24 hours, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>TechOpsHelpdesk@locumtenens.com</a>."
+      "Do not open a support case until the <strong>24-hour window has passed</strong>.",
+      "If documents are still missing after 24 hours, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>TechOps</a>."
     ],
-    tips: [
-      "This delay is normal and should be expected. No action is needed during the sync window."
-    ],
-    warnings: [],
-    notes: []
+    tips: ["This delay is normal and expected. No action is needed during the 24-hour sync window."],
+    warnings: [], notes: []
   },
   {
-    id: 13,
-    category: "portal",
-    icon: "📊",
-    title: "Provider Status Shows 'Application Started' or 'Application Sent' After Completing",
-    description: "Provider completed the credentialing application but status still shows in-progress.",
+    id: 14, category: "portal", icon: "📊",
+    title: "Status Still Shows 'Application Started' or 'Application Sent'",
+    description: "Provider completed credentialing but their status still shows as in-progress.",
+    keywords: [
+      "application started", "application sent", "status not updated",
+      "still shows started", "completed but status", "finished credentialing but",
+      "status wrong", "incorrect status", "application not complete",
+      "says started", "still in progress", "says application sent",
+      "status hasnt changed", "status still shows", "application still open",
+      "completed but still showing", "application status wrong",
+      "status not changing", "finished but says started", "application status stuck"
+    ],
     causes: [
-      "Provider may still be completing the application in Axuall",
-      "Provider may be attempting to upload documents in the Document Library before credentialing is fully complete"
+      "Provider may not have fully submitted the application in Axuall",
+      "Provider may be in the Document Library rather than the Credentialing Application"
     ],
     steps: [
       "Confirm whether the provider has <strong>fully submitted</strong> the application in Axuall (not just started it).",
-      "Ask the provider for a <strong>screenshot</strong> of what they are seeing in the portal.",
-      "Verify the provider is not confused between the <strong>Document Library</strong> and the <strong>Credentialing Application</strong>.",
-      "If the provider has truly completed everything and the status is incorrect after 24 hours, escalate to TechOps."
+      "Ask the provider for a <strong>screenshot</strong> of what they are currently seeing.",
+      "Verify the provider is not confusing the <strong>Document Library</strong> with the Credentialing Application.",
+      "If truly completed and status is still incorrect after <strong>24 hours</strong>, escalate to TechOps."
     ],
-    tips: [],
-    warnings: [],
-    notes: []
+    tips: [], warnings: [], notes: []
   }
 ];
 
-// ── State ──
+// ─────────────────────────────────────────────
+//  BROWSE LOGIC
+// ─────────────────────────────────────────────
 let activeCategory = "all";
 let searchQuery = "";
 
-// ── DOM refs ──
-const searchInput   = document.getElementById("searchInput");
-const clearBtn      = document.getElementById("clearSearch");
-const issueList     = document.getElementById("issueList");
-const noResults     = document.getElementById("noResults");
-const resultMeta    = document.getElementById("resultMeta");
-const catButtons    = document.querySelectorAll(".category-list button");
+const searchInput  = document.getElementById("searchInput");
+const clearBtn     = document.getElementById("clearSearch");
+const issueListEl  = document.getElementById("issueList");
+const noResultsEl  = document.getElementById("noResults");
+const resultMetaEl = document.getElementById("resultMeta");
+const catButtons   = document.querySelectorAll(".category-list button");
 
-// ── Helpers ──
-function normalize(str) {
-  return str.toLowerCase().replace(/<[^>]*>/g, "");
-}
+function normalize(str) { return str.toLowerCase().replace(/<[^>]*>/g, ""); }
 
 function highlight(text, query) {
   if (!query) return text;
-  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const re = new RegExp(`(${escaped})`, "gi");
-  // Only highlight in text nodes, not HTML tags
-  return text.replace(/>([^<]*)</g, (match, p1) => {
-    return ">" + p1.replace(re, "<mark>$1</mark>") + "<";
-  });
-}
-
-function issueMatchesSearch(issue, query) {
-  if (!query) return true;
-  const q = query.toLowerCase();
-  const haystack = [
-    issue.title,
-    issue.description,
-    ...(issue.causes || []),
-    ...(issue.steps || []),
-    ...(issue.tips || []),
-    ...(issue.warnings || []),
-    ...(issue.notes || [])
-  ].map(normalize).join(" ");
-  return haystack.includes(q);
-}
-
-function issueMatchesCategory(issue, cat) {
-  return cat === "all" || issue.category === cat;
-}
-
-function getCategoryLabel(cat) {
-  const map = {
-    login: "Login & Account",
-    docs: "Documents",
-    email: "Email & Invites",
-    cred: "Credentialing",
-    axuall: "Axuall",
-    mobile: "Mobile & Browser",
-    portal: "Portal & Tabs"
-  };
-  return map[cat] || cat;
-}
-
-// ── Render ──
-function renderIssues() {
-  const filtered = ISSUES.filter(
-    i => issueMatchesCategory(i, activeCategory) && issueMatchesSearch(i, searchQuery)
+  const esc = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return text.replace(/>([^<]*)</g, (m, p) =>
+    ">" + p.replace(new RegExp(`(${esc})`, "gi"), "<mark>$1</mark>") + "<"
   );
+}
 
-  issueList.innerHTML = "";
+function matchesSearch(issue, q) {
+  if (!q) return true;
+  const hay = [
+    issue.title, issue.description,
+    ...(issue.causes||[]), ...(issue.steps||[]),
+    ...(issue.tips||[]), ...(issue.warnings||[]), ...(issue.notes||[]),
+    ...(issue.keywords||[])
+  ].map(normalize).join(" ");
+  return hay.includes(q.toLowerCase());
+}
 
-  if (filtered.length === 0) {
-    noResults.style.display = "block";
-    resultMeta.innerHTML = "";
-    return;
-  }
-  noResults.style.display = "none";
+function matchesCategory(issue, cat) { return cat === "all" || issue.category === cat; }
 
-  if (searchQuery) {
-    resultMeta.innerHTML = `Showing <strong>${filtered.length}</strong> result${filtered.length !== 1 ? "s" : ""} for &ldquo;${searchQuery}&rdquo;`;
-  } else if (activeCategory !== "all") {
-    resultMeta.innerHTML = `Showing <strong>${filtered.length}</strong> issue${filtered.length !== 1 ? "s" : ""} in <strong>${getCategoryLabel(activeCategory)}</strong>`;
+function catLabel(cat) {
+  return { login:"Login & Account", docs:"Documents", email:"Email & Invites",
+           cred:"Credentialing", axuall:"Axuall", mobile:"Mobile & Browser",
+           portal:"Portal & Tabs" }[cat] || cat;
+}
+
+function renderBrowse() {
+  const filtered = ISSUES.filter(i => matchesCategory(i, activeCategory) && matchesSearch(i, searchQuery));
+  issueListEl.innerHTML = "";
+  noResultsEl.style.display = filtered.length ? "none" : "block";
+
+  if (filtered.length) {
+    if (searchQuery) resultMetaEl.innerHTML = `Showing <strong>${filtered.length}</strong> result${filtered.length!==1?"s":""} for &ldquo;${searchQuery}&rdquo;`;
+    else if (activeCategory !== "all") resultMetaEl.innerHTML = `Showing <strong>${filtered.length}</strong> issue${filtered.length!==1?"s":""} in <strong>${catLabel(activeCategory)}</strong>`;
+    else resultMetaEl.innerHTML = `Showing all <strong>${filtered.length}</strong> issues`;
   } else {
-    resultMeta.innerHTML = `Showing all <strong>${filtered.length}</strong> issues`;
+    resultMetaEl.innerHTML = "";
   }
 
   filtered.forEach(issue => {
     const card = document.createElement("div");
     card.className = `issue-card cat-${issue.category}`;
-    card.dataset.id = issue.id;
-
+    card.id = `issue-${issue.id}`;
     const titleHL = highlight(issue.title, searchQuery);
     const descHL  = highlight(issue.description, searchQuery);
 
-    let bodyHTML = "";
-
-    // Causes
-    if (issue.causes && issue.causes.length) {
-      bodyHTML += `<div class="section-label">Common Causes</div>`;
-      bodyHTML += `<ul class="causes">`;
-      issue.causes.forEach(c => {
-        bodyHTML += `<li>${highlight(c, searchQuery)}</li>`;
-      });
-      bodyHTML += `</ul>`;
+    let body = "";
+    if (issue.causes?.length) {
+      body += `<div class="section-label">Common Causes</div><ul class="causes">`;
+      issue.causes.forEach(c => { body += `<li>${highlight(c, searchQuery)}</li>`; });
+      body += `</ul>`;
     }
-
-    // Steps
-    if (issue.steps && issue.steps.length) {
-      bodyHTML += `<div class="section-label">Step-by-Step Resolution</div>`;
-      bodyHTML += `<ol class="steps">`;
-      issue.steps.forEach(s => {
-        bodyHTML += `<li><span>${highlight(s, searchQuery)}</span></li>`;
-      });
-      bodyHTML += `</ol>`;
+    if (issue.steps?.length) {
+      body += `<div class="section-label">Step-by-Step Resolution</div><ol class="steps">`;
+      issue.steps.forEach(s => { body += `<li><span>${highlight(s, searchQuery)}</span></li>`; });
+      body += `</ol>`;
     }
-
-    // Warnings
-    if (issue.warnings && issue.warnings.length) {
-      issue.warnings.forEach(w => {
-        bodyHTML += `<div class="warn-box"><span class="box-icon">&#9888;</span><p>${highlight(w, searchQuery)}</p></div>`;
-      });
-    }
-
-    // Tips
-    if (issue.tips && issue.tips.length) {
-      issue.tips.forEach(t => {
-        bodyHTML += `<div class="tip-box"><span class="box-icon">&#128161;</span><p>${highlight(t, searchQuery)}</p></div>`;
-      });
-    }
-
-    // Notes
-    if (issue.notes && issue.notes.length) {
-      issue.notes.forEach(n => {
-        bodyHTML += `<div class="info-box"><span class="box-icon">&#8505;</span><p>${highlight(n, searchQuery)}</p></div>`;
-      });
-    }
+    issue.warnings?.forEach(w => { body += `<div class="warn-box"><span class="box-icon">&#9888;</span><p>${highlight(w, searchQuery)}</p></div>`; });
+    issue.tips?.forEach(t =>    { body += `<div class="tip-box"><span class="box-icon">&#128161;</span><p>${highlight(t, searchQuery)}</p></div>`; });
+    issue.notes?.forEach(n =>   { body += `<div class="info-box"><span class="box-icon">&#8505;</span><p>${highlight(n, searchQuery)}</p></div>`; });
 
     card.innerHTML = `
       <div class="card-header" role="button" tabindex="0" aria-expanded="false">
@@ -914,78 +1145,273 @@ function renderIssues() {
           <div class="card-desc">${descHL}</div>
         </div>
         <div class="card-meta">
-          <span class="badge">${getCategoryLabel(issue.category)}</span>
+          <span class="badge">${catLabel(issue.category)}</span>
           <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
       </div>
-      <div class="card-body">${bodyHTML}</div>
-    `;
+      <div class="card-body">${body}</div>`;
 
-    const header = card.querySelector(".card-header");
-    header.addEventListener("click", () => toggleCard(card, header));
-    header.addEventListener("keydown", e => {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleCard(card, header); }
-    });
-
-    // Auto-open on search
-    if (searchQuery) {
-      card.classList.add("open");
-      header.setAttribute("aria-expanded", "true");
-    }
-
-    issueList.appendChild(card);
+    const hdr = card.querySelector(".card-header");
+    hdr.addEventListener("click", () => { card.classList.toggle("open"); hdr.setAttribute("aria-expanded", card.classList.contains("open")); });
+    hdr.addEventListener("keydown", e => { if (e.key==="Enter"||e.key===" ") { e.preventDefault(); hdr.click(); } });
+    if (searchQuery) { card.classList.add("open"); hdr.setAttribute("aria-expanded","true"); }
+    issueListEl.appendChild(card);
   });
-
   updateCounts();
 }
 
-function toggleCard(card, header) {
-  const isOpen = card.classList.toggle("open");
-  header.setAttribute("aria-expanded", isOpen);
-}
-
 function updateCounts() {
-  const cats = ["all", "login", "docs", "email", "cred", "axuall", "mobile", "portal"];
-  cats.forEach(cat => {
-    const count = cat === "all"
-      ? ISSUES.filter(i => issueMatchesSearch(i, searchQuery)).length
-      : ISSUES.filter(i => i.category === cat && issueMatchesSearch(i, searchQuery)).length;
+  ["all","login","docs","email","cred","axuall","mobile","portal"].forEach(cat => {
+    const n = cat==="all"
+      ? ISSUES.filter(i => matchesSearch(i, searchQuery)).length
+      : ISSUES.filter(i => i.category===cat && matchesSearch(i, searchQuery)).length;
     const el = document.getElementById(`cnt-${cat}`);
-    if (el) el.textContent = count;
+    if (el) el.textContent = n;
   });
 }
 
-// ── Events ──
 searchInput.addEventListener("input", () => {
   searchQuery = searchInput.value.trim();
-  if (searchQuery) {
-    activeCategory = "all";
-    catButtons.forEach(b => b.classList.remove("active"));
-    document.querySelector('[data-cat="all"]').classList.add("active");
-  }
-  renderIssues();
+  searchInput.classList.toggle("has-value", !!searchQuery);
+  if (searchQuery) { activeCategory = "all"; catButtons.forEach(b => b.classList.remove("active")); document.querySelector('[data-cat="all"]').classList.add("active"); }
+  renderBrowse();
 });
-
-clearBtn.addEventListener("click", () => {
-  searchInput.value = "";
-  searchQuery = "";
-  renderIssues();
-  searchInput.focus();
-});
-
+clearBtn.addEventListener("click", () => { searchInput.value = ""; searchQuery = ""; searchInput.classList.remove("has-value"); renderBrowse(); searchInput.focus(); });
 catButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     activeCategory = btn.dataset.cat;
     catButtons.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
-    searchInput.value = "";
-    searchQuery = "";
-    renderIssues();
+    searchInput.value = ""; searchQuery = ""; searchInput.classList.remove("has-value");
+    renderBrowse();
   });
 });
 
-// ── Init ──
-renderIssues();
+// ─────────────────────────────────────────────
+//  TAB SWITCHING
+// ─────────────────────────────────────────────
+const searchStrip = document.getElementById("searchStrip");
+document.querySelectorAll(".tab-nav button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-nav button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const tab = btn.dataset.tab;
+    document.getElementById("browsePanel").classList.toggle("active", tab === "browse");
+    document.getElementById("chatPanel").classList.toggle("active", tab === "chat");
+    searchStrip.classList.toggle("hidden", tab === "chat");
+  });
+});
+
+// ─────────────────────────────────────────────
+//  CHATBOT LOGIC
+// ─────────────────────────────────────────────
+const chatMessages = document.getElementById("chatMessages");
+const chatInput    = document.getElementById("chatInput");
+const chatSend     = document.getElementById("chatSend");
+
+const SUGGESTIONS = [
+  "Authenticate button isn't working",
+  "Provider can't get into Axuall",
+  "Missing credentials tab",
+  "Provider locked out of account",
+  "Not receiving invite email",
+  "Identity verification failed",
+  "Documents won't upload",
+  "Mobile error — something is broken",
+  "How to re-credential",
+  "Documents not showing in Salesforce"
+];
+
+function escHtml(s) {
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function normalizeQuery(q) {
+  return q.toLowerCase()
+    .replace(/[''`]/g, "'")
+    .replace(/can't|cant/g, "cannot")
+    .replace(/won't|wont/g, "will not")
+    .replace(/doesn't|doesnt/g, "does not")
+    .replace(/isn't|isnt/g, "is not")
+    .replace(/aren't|arent/g, "are not")
+    .replace(/haven't|havent/g, "have not")
+    .replace(/hasn't|hasnt/g, "has not")
+    .replace(/didn't|didnt/g, "did not")
+    .replace(/don't|dont/g, "do not")
+    .replace(/they're|theyre/g, "they are")
+    .replace(/it's|its\b/g, "it is")
+    .replace(/i'm|im\b/g, "i am")
+    .replace(/i've|ive\b/g, "i have")
+    .replace(/[^a-z0-9\s\-]/g, " ")
+    .replace(/\s+/g, " ").trim();
+}
+
+function scoreIssue(issue, nq) {
+  let score = 0;
+  for (const kw of (issue.keywords || [])) {
+    const nkw = kw.toLowerCase().replace(/[^a-z0-9\s\-]/g, " ").replace(/\s+/g," ").trim();
+    if (nq.includes(nkw)) {
+      const wordCount = nkw.split(/\s+/).length;
+      score += wordCount >= 3 ? wordCount * 4 : wordCount >= 2 ? wordCount * 3 : 1;
+    }
+  }
+  // Bonus for individual title words
+  const titleTokens = issue.title.toLowerCase().split(/\s+/).filter(w => w.length > 4);
+  for (const t of titleTokens) {
+    if (nq.split(/\s+/).includes(t)) score += 0.5;
+  }
+  return score;
+}
+
+function findMatches(query) {
+  const nq = normalizeQuery(query);
+  return ISSUES
+    .map(issue => ({ issue, score: scoreIssue(issue, nq) }))
+    .filter(r => r.score > 0)
+    .sort((a, b) => b.score - a.score);
+}
+
+function buildChatCard(issue) {
+  const badge = `<span class="crc-badge" style="background:var(--brand-light);color:var(--brand);">${catLabel(issue.category)}</span>`;
+  let stepsHtml = "";
+  if (issue.steps?.length) {
+    stepsHtml = `<ol class="crc-steps">` + issue.steps.map(s => `<li><span>${s}</span></li>`).join("") + `</ol>`;
+  }
+  let extraHtml = "";
+  issue.warnings?.forEach(w => { extraHtml += `<div class="crc-warn">&#9888; ${w}</div>`; });
+  issue.tips?.slice(0,1).forEach(t => { extraHtml += `<div class="crc-tip">&#128161; ${t}</div>`; });
+
+  return `
+    <div class="chat-result-card">
+      <div class="crc-header">
+        <span class="crc-icon">${issue.icon}</span>
+        <span class="crc-title">${issue.title}</span>
+        ${badge}
+      </div>
+      <div class="crc-body">
+        ${stepsHtml}
+        ${extraHtml}
+        <button class="view-browse-btn" onclick="openInBrowse(${issue.id})">View full details in Browse &rarr;</button>
+      </div>
+    </div>`;
+}
+
+function openInBrowse(id) {
+  // Switch to Browse tab
+  document.querySelector('[data-tab="browse"]').click();
+  setTimeout(() => {
+    // Expand and scroll to card
+    const card = document.getElementById(`issue-${id}`);
+    if (!card) return;
+    card.classList.add("open");
+    card.querySelector(".card-header")?.setAttribute("aria-expanded","true");
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    card.classList.add("highlight-pulse");
+    setTimeout(() => card.classList.remove("highlight-pulse"), 1400);
+  }, 150);
+}
+window.openInBrowse = openInBrowse;
+
+function getOpeningLine(matches, query) {
+  const top = matches[0].issue;
+  const score = matches[0].score;
+
+  if (top.id === 8 || (normalizeQuery(query).includes("authenticate") && normalizeQuery(query).includes("not")) || normalizeQuery(query).includes("popup") || normalizeQuery(query).includes("pop-up") || normalizeQuery(query).includes("cookies")) {
+    return "That sounds like a <strong>pop-up blocker or third-party cookies</strong> issue — this is one of the most common reasons the Authenticate button appears to do nothing. Here's how to fix it:";
+  }
+  if (normalizeQuery(query).includes("locked")) return "A locked account can't be manually unlocked by TechOps — but here's how the provider can fix it themselves:";
+  if (normalizeQuery(query).includes("identity verification") || normalizeQuery(query).includes("verify identity")) return "Identity verification errors in Axuall need to be handled directly with Axuall Support. Here's what to tell the provider:";
+  if (normalizeQuery(query).includes("mobile") || normalizeQuery(query).includes("broken")) return "Good news — nothing is actually broken! This is a known mobile compatibility issue. Here's the fix:";
+  if (normalizeQuery(query).includes("sync") || normalizeQuery(query).includes("salesforce")) return "This is likely just the normal Axuall &rarr; Salesforce sync delay. Here's what you need to know:";
+  if (score >= 8) return `I found a strong match for that. Here's how to handle it:`;
+  return `Here's the most relevant information I found:`;
+}
+
+function addMessage(html, type) {
+  const row = document.createElement("div");
+  row.className = `msg-row ${type}`;
+  const avText = type === "bot" ? "TO" : "You";
+  row.innerHTML = `
+    <div class="avatar ${type}">${avText}</div>
+    <div class="bubble ${type}">${html}</div>`;
+  chatMessages.appendChild(row);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return row;
+}
+
+function addTypingIndicator() {
+  const row = document.createElement("div");
+  row.className = "msg-row bot typing-indicator";
+  row.innerHTML = `<div class="avatar bot">TO</div><div class="bubble bot"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+  chatMessages.appendChild(row);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return row;
+}
+
+function handleChatQuery(query) {
+  if (!query.trim()) return;
+  addMessage(escHtml(query), "user");
+  chatInput.value = "";
+  chatSend.disabled = true;
+
+  const typing = addTypingIndicator();
+
+  setTimeout(() => {
+    typing.remove();
+    const matches = findMatches(query);
+
+    if (!matches.length) {
+      addMessage(`I wasn't able to find a match for that. Try rephrasing, or browse the issue categories directly.<br><br>For anything not covered here, contact TechOps:<br><strong>techopshelpdesk@locumtenens.com</strong> &mdash; 877-732-7080`, "bot");
+      chatSend.disabled = false;
+      return;
+    }
+
+    const opening = getOpeningLine(matches, query);
+    const mainCard = buildChatCard(matches[0].issue);
+
+    let relatedHtml = "";
+    if (matches.length > 1) {
+      const chips = matches.slice(1, 4).map(m =>
+        `<span class="related-chip" onclick="showRelated(${m.issue.id})">${m.issue.icon} ${m.issue.title}</span>`
+      ).join("");
+      relatedHtml = `<div class="also-related"><strong>Also possibly related:</strong><br>${chips}</div>`;
+    }
+
+    addMessage(`${opening}${mainCard}${relatedHtml}`, "bot");
+    chatSend.disabled = false;
+  }, 700);
+}
+
+function showRelated(id) {
+  const issue = ISSUES.find(i => i.id === id);
+  if (!issue) return;
+  addMessage(`Here are the details for <strong>${issue.title}</strong>:${buildChatCard(issue)}`, "bot");
+}
+window.showRelated = showRelated;
+
+function sendChat() {
+  const q = chatInput.value.trim();
+  if (q) handleChatQuery(q);
+}
+
+chatSend.addEventListener("click", sendChat);
+chatInput.addEventListener("keydown", e => { if (e.key === "Enter") sendChat(); });
+
+// Welcome message
+function initChat() {
+  const chips = SUGGESTIONS.map(s =>
+    `<span class="suggestion-chip" onclick="document.getElementById('chatInput').value=this.textContent;sendChat()">${s}</span>`
+  ).join("");
+
+  addMessage(`Hello! I'm the TechOps support assistant for LocumTenens.com.<br><br>Describe a provider issue in your own words and I'll walk you through the fix. You can say things like <em>"the authenticate button isn't doing anything"</em> or <em>"provider can't find their credentials tab."</em><br><br><div class="suggestions-wrap"><div class="suggestions-label">Or pick a common issue:</div><div class="suggestion-chips">${chips}</div></div>`, "bot");
+}
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+renderBrowse();
+initChat();
+window.sendChat = sendChat;
 </script>
 </body>
 </html>
