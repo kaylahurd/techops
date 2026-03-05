@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechOps Provider Support Guide</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:       #0057A8;
+      --brand-dark:  #003f7f;
+      --brand-light: #e8f0fb;
+      --accent:      #00A651;
+      --warn:        #c0392b;
+      --warn-bg:     #fdf3f2;
+      --info:        #1565c0;
+      --info-bg:     #e3f2fd;
+      --tip-bg:      #f0faf4;
+      --tip-border:  #00A651;
+      --text:        #1a1a2e;
+      --muted:       #6b7280;
+      --border:      #dde3ec;
+      --bg:          #f4f6fb;
+      --card:        #ffffff;
+      --radius:      10px;
+      --shadow:      0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
+      color: #fff;
+      padding: 28px 32px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,80,0.18);
+    }
+    header .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header h1 {
+      font-size: 1.55rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    header p.subtitle {
+      font-size: 0.875rem;
+      opacity: 0.85;
+      margin-top: 4px;
+    }
+
+    /* ── Search bar ── */
+    .search-wrap {
+      margin-top: 18px;
+      position: relative;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+    #searchInput {
+      width: 100%;
+      max-width: 620px;
+      padding: 11px 16px 11px 42px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.95rem;
+      background: rgba(255,255,255,0.95);
+      color: var(--text);
+      outline: none;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+      transition: box-shadow 0.2s;
+    }
+    #searchInput:focus {
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.4);
+    }
+    #clearSearch {
+      position: absolute;
+      right: calc(100% - 620px + 12px);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 1.1rem;
+      display: none;
+      padding: 4px;
+    }
+    @media (max-width: 680px) { #clearSearch { right: 12px; } }
+    #searchInput:not(:placeholder-shown) ~ #clearSearch { display: block; }
+
+    /* ── Layout ── */
+    .layout {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 0 20px 60px;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 0;
+      position: sticky;
+      top: 120px;
+    }
+    .sidebar h2 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 18px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .category-list { list-style: none; padding: 8px 0; }
+    .category-list li button {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 9px 18px;
+      font-size: 0.875rem;
+      color: var(--text);
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .category-list li button:hover {
+      background: var(--brand-light);
+      color: var(--brand);
+    }
+    .category-list li button.active {
+      background: var(--brand-light);
+      color: var(--brand);
+      border-left-color: var(--brand);
+      font-weight: 600;
+    }
+    .cat-count {
+      margin-left: auto;
+      background: var(--border);
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 1px 7px;
+    }
+    .category-list li button.active .cat-count {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    /* Contact card in sidebar */
+    .contact-card {
+      margin: 12px 14px 0;
+      background: var(--brand-light);
+      border-radius: 8px;
+      padding: 12px 14px;
+      border: 1px solid #c8d9f0;
+    }
+    .contact-card h3 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--brand-dark);
+      margin-bottom: 6px;
+    }
+    .contact-card p {
+      font-size: 0.8rem;
+      color: var(--brand-dark);
+      margin-bottom: 3px;
+    }
+    .contact-card a { color: var(--brand); text-decoration: none; font-weight: 500; }
+    .contact-card a:hover { text-decoration: underline; }
+
+    /* ── Main content ── */
+    .main { min-width: 0; }
+
+    /* Result count */
+    .result-meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+      min-height: 20px;
+    }
+    .result-meta strong { color: var(--text); }
+
+    /* No results */
+    #noResults {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    #noResults h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
+    #noResults p { font-size: 0.875rem; }
+
+    /* ── Issue card ── */
+    .issue-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .issue-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.11); }
+
+    .card-header {
+      padding: 16px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .card-header:hover { background: #fafbfd; }
+
+    .card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+
+    .card-title-block { flex: 1; min-width: 0; }
+    .card-title-block h3 {
+      font-size: 0.975rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3px;
+      line-height: 1.35;
+    }
+    .card-title-block .card-desc {
+      font-size: 0.815rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: 20px;
+      padding: 2px 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .chevron {
+      color: var(--muted);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .issue-card.open .chevron { transform: rotate(180deg); }
+
+    /* Card body */
+    .card-body {
+      display: none;
+      padding: 0 20px 20px;
+      border-top: 1px solid var(--border);
+    }
+    .issue-card.open .card-body { display: block; }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 16px 0 8px;
+    }
+
+    /* Steps */
+    .steps { list-style: none; counter-reset: steps; }
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 0.875rem;
+    }
+    .steps li::before {
+      content: counter(steps);
+      background: var(--brand);
+      color: #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Causes list */
+    .causes { list-style: none; padding: 0; }
+    .causes li {
+      font-size: 0.875rem;
+      padding: 5px 0 5px 18px;
+      position: relative;
+      color: var(--text);
+    }
+    .causes li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 13px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--muted);
+    }
+
+    /* Info / warning / tip boxes */
+    .info-box, .warn-box, .tip-box {
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 0.84rem;
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .info-box { background: var(--info-bg); border: 1px solid #90caf9; color: #0d47a1; }
+    .warn-box  { background: var(--warn-bg);  border: 1px solid #ef9a9a; color: var(--warn); }
+    .tip-box   { background: var(--tip-bg);   border: 1px solid var(--tip-border); color: #1b5e20; }
+    .info-box .box-icon, .warn-box .box-icon, .tip-box .box-icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .info-box p, .warn-box p, .tip-box p { margin: 0; line-height: 1.5; }
+
+    /* Highlight search term */
+    mark {
+      background: #fff176;
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 1px;
+    }
+
+    /* Category color themes */
+    .cat-login   .card-icon { background: #e3f2fd; color: #1565c0; }
+    .cat-docs    .card-icon { background: #fce4ec; color: #880e4f; }
+    .cat-email   .card-icon { background: #e8f5e9; color: #2e7d32; }
+    .cat-cred    .card-icon { background: #fff3e0; color: #e65100; }
+    .cat-axuall  .card-icon { background: #f3e5f5; color: #6a1b9a; }
+    .cat-mobile  .card-icon { background: #e0f7fa; color: #006064; }
+    .cat-portal  .card-icon { background: #fafafa; color: #424242; }
+
+    .cat-login .badge  { background: #e3f2fd; color: #1565c0; }
+    .cat-docs .badge   { background: #fce4ec; color: #880e4f; }
+    .cat-email .badge  { background: #e8f5e9; color: #2e7d32; }
+    .cat-cred .badge   { background: #fff3e0; color: #e65100; }
+    .cat-axuall .badge { background: #f3e5f5; color: #6a1b9a; }
+    .cat-mobile .badge { background: #e0f7fa; color: #006064; }
+    .cat-portal .badge { background: #fafafa; color: #424242; border: 1px solid #ddd; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>TechOps Provider Support Guide</h1>
+    <p class="subtitle">LocumTenens.com &mdash; Self-service reference for Recruiters &amp; CRs</p>
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Search by keyword, issue, or topic&hellip;" autocomplete="off" />
+      <button id="clearSearch" title="Clear search" aria-label="Clear search">&times;</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Browse by Category</h2>
+    <ul class="category-list" id="categoryList">
+      <li><button class="active" data-cat="all">
+        <span>All Issues</span>
+        <span class="cat-count" id="cnt-all">0</span>
+      </button></li>
+      <li><button data-cat="login">
+        <span>Login &amp; Account</span>
+        <span class="cat-count" id="cnt-login">0</span>
+      </button></li>
+      <li><button data-cat="docs">
+        <span>Documents</span>
+        <span class="cat-count" id="cnt-docs">0</span>
+      </button></li>
+      <li><button data-cat="email">
+        <span>Email &amp; Invites</span>
+        <span class="cat-count" id="cnt-email">0</span>
+      </button></li>
+      <li><button data-cat="cred">
+        <span>Credentialing</span>
+        <span class="cat-count" id="cnt-cred">0</span>
+      </button></li>
+      <li><button data-cat="axuall">
+        <span>Axuall</span>
+        <span class="cat-count" id="cnt-axuall">0</span>
+      </button></li>
+      <li><button data-cat="mobile">
+        <span>Mobile &amp; Browser</span>
+        <span class="cat-count" id="cnt-mobile">0</span>
+      </button></li>
+      <li><button data-cat="portal">
+        <span>Portal &amp; Tabs</span>
+        <span class="cat-count" id="cnt-portal">0</span>
+      </button></li>
+    </ul>
+
+    <div class="contact-card">
+      <h3>Escalate to TechOps</h3>
+      <p>Manager: Kelly Thompson</p>
+      <p><a href="mailto:techopshelpdesk@locumtenens.com">techopshelpdesk@locumtenens.com</a></p>
+      <p>Phone: <a href="tel:8777327080">877-732-7080</a></p>
+      <p style="margin-top:6px;font-size:0.75rem;opacity:0.8;">Include: Provider Name, Issue Description, SF Link, Screenshots</p>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <p class="result-meta" id="resultMeta"></p>
+    <div id="issueList"></div>
+    <div id="noResults">
+      <h3>No results found</h3>
+      <p>Try different keywords or browse by category using the sidebar.</p>
+    </div>
+  </main>
+
+</div>
+
+<footer>
+  TechOps Provider Support Guide &mdash; LocumTenens.com &mdash; Internal Use Only
+</footer>
+
+<script>
+const ISSUES = [
+  {
+    id: 1,
+    category: "docs",
+    icon: "📄",
+    title: "Provider Cannot Open or Upload Documents",
+    description: "Documents won't open, downloads are blocked, or uploads fail.",
+    causes: [
+      "Organization security restrictions on email or SharePoint",
+      "VPN interference (provider may be connected to a VPN)",
+      "Browser cache issues or outdated browser"
+    ],
+    steps: [
+      "Ask the provider to try opening or uploading the document in <strong>Google Chrome</strong>.",
+      "Have them <strong>clear their browser cache</strong> and retry.",
+      "If connected to a VPN, have them <strong>disconnect from the VPN</strong> temporarily and test again.",
+      "Have them attempt the upload from a <strong>different device or network</strong>.",
+      "If the issue persists and an error references organizational blocking, <strong>escalate to TechOps</strong> for an email/security review."
+    ],
+    tips: [
+      "Documents must be in <strong>.pdf</strong> or <strong>.docx</strong> format. Headshots should be in <strong>.jpg</strong>, <strong>.png</strong>, or another accepted image format."
+    ],
+    warnings: [],
+    notes: []
+  },
+  {
+    id: 2,
+    category: "email",
+    icon: "✉️",
+    title: "Provider Not Receiving Emails (Invites, Codes, Links)",
+    description: "Provider is not receiving login codes, invites, or system emails.",
+    causes: [],
+    steps: [
+      "Confirm the <strong>email on file in Salesforce</strong> is correct.",
+      "Ask the provider to check their <strong>Spam/Junk</strong> folder.",
+      "Have them search for emails from <strong>LT_OnlineServices@locumtenens.com</strong>.",
+      "<strong>Resend</strong> the invite or verification code.",
+      "If still not received, recommend adding <strong>LT_OnlineServices@locumtenens.com</strong> to their safe sender list."
+    ],
+    tips: [],
+    warnings: [],
+    notes: []
+  },
+  {
+    id: 3,
+    category: "portal",
+    icon: "🔍",
+    title: "Clinician Portal Verification Confusion",
+    description: "Provider believes they are credentialed or invited but cannot proceed.",
+    causes: [],
+    steps: [
+      "Clarify that the <strong>LT Online Experience invite only verifies the account</strong> — it does not start the credentialing process.",
+      "Direct the provider to follow the <em>How to Access the Credentialing Application</em> steps to begin credentialing in Axuall."
+    ],
+    tips: [],
+    warnings: [],
+    notes: [
+      "The LT Online Experience invite verifies the account only. It does <strong>not</strong> initiate credentialing. Credentialing must be started separately through Axuall."
+    ]
+  },
+  {
+    id: 4,
+    category: "mobile",
+    icon: "📱",
+    title: "Mobile Credentialing Access Error (\"Something Is Broken\")",
+    description: "Provider gets an error when completing credentialing on a mobile device.",
+    causes: [
+      "Known mobile compatibility issue with the credentialing portal"
+    ],
+    steps: [
+      "Reassure the provider — <strong>nothing is actually broken</strong>. This is a known mobile compatibility issue.",
+      "Direct the provider to use the <strong>direct credentialing link</strong> on their phone: <code>https://portal.locumtenens.com/#/credentials/overview</code>",
+      "If possible, encourage them to switch to a <strong>desktop or laptop</strong> for the most reliable experience."
+    ],
+    tips: [
+      "Completing credentialing on a desktop or laptop is always recommended for the best experience."
+    ],
+    warnings: [],
+    notes: []
+  },
+  {
+    id: 5,
+    category: "login",
+    icon: "🔒",
+    title: "Incorrect Username or Password / Locked Account",
+    description: "Provider cannot log in due to incorrect credentials or a locked LTOE account.",
+    causes: [],
+    steps: [
+      "On the login screen, click <strong>\"Forgot your password?\"</strong>",
+      "Enter the <strong>email address</strong> associated with the account.",
+      "Enter the <strong>verification code</strong> sent to that email.",
+      "Create a <strong>new password</strong> that meets all listed requirements.",
+      "Log in using the newly created password."
+    ],
+    tips: [],
+    warnings: [
+      "TechOps <strong>cannot manually unlock</strong> a locked account. Resetting the password will automatically unlock it, OR the provider may wait <strong>30 minutes</strong> for the lock to clear on its own."
+    ],
+    notes: []
+  },
+  {
+    id: 6,
+    category: "portal",
+    icon: "🗂️",
+    title: "Missing Credentials Tab in LTOE",
+    description: "Provider cannot see the Credentials tab in their LTOE account.",
+    causes: [
+      "LTOE username and Salesforce email do not match — these must be identical for proper access",
+      "Clinician Portal is not yet verified — an unverified portal prevents the Credentials tab from appearing"
+    ],
+    steps: [
+      "Open the provider's record in <strong>Salesforce</strong> and click the <strong>Details</strong> tab.",
+      "Locate the <strong>LTOE Username</strong> field and confirm it matches the provider's email exactly.",
+      "To check portal verification: go to the provider's Salesforce page &rarr; Details tab &rarr; scroll to <strong>Clinician Portal Verification</strong>.",
+      "If the email and LTOE username do not match, submit a ticket to <a href='mailto:lthelpdesk@locumtenens.com'>lthelpdesk@locumtenens.com</a> to request the change.",
+      "If the portal is unverified, resend the LT Online Experience invite so the provider can verify their account."
+    ],
+    tips: [],
+    warnings: [
+      "A provider's email in Salesforce <strong>cannot</strong> be changed if their portal is already verified. A ticket must be submitted to LT Helpdesk to request this change."
+    ],
+    notes: [
+      "Providers may still be able to log in even if the email and username don't match, but this often causes system glitches or missing functionality."
+    ]
+  },
+  {
+    id: 7,
+    category: "cred",
+    icon: "📋",
+    title: "How to Access the Credentialing Application",
+    description: "Step-by-step guide for providers to access their credentialing application through LTOE and Axuall.",
+    causes: [],
+    steps: [
+      "Log in at <a href='https://www.locumtenens.com/' target='_blank'>www.locumtenens.com</a> using the <strong>email on file in Salesforce</strong> and the associated password.",
+      "Click <strong>CREDENTIALS</strong> from the top navigation.",
+      "Select <strong>Credentialing Overview</strong>.",
+      "The provider will see one of the following prompts:<br>&bull; \"Before you begin credentialing, please gather the following information\" &rarr; Verify NPI and click <strong>Get Started</strong><br>&bull; Click <strong>\"Authenticate your account\"</strong>",
+      "The provider will be <strong>automatically redirected</strong> to begin their credentialing application in Axuall."
+    ],
+    tips: [
+      "Google Chrome is recommended and resolves most access issues.",
+      "Clearing browser cache can fix slow loading, blank screens, or looping behavior.",
+      "Axuall requires <strong>third-party cookies</strong> to be enabled.",
+      "If still blocked, have the provider try from a different device (laptop, desktop, smartphone, or tablet)."
+    ],
+    warnings: [],
+    notes: []
+  },
+  {
+    id: 8,
+    category: "cred",
+    icon: "🔄",
+    title: "How to Re-Credential",
+    description: "Guide for providers to access their re-credentialing application through LTOE and Axuall.",
+    causes: [],
+    steps: [
+      "Log in at <a href='https://www.locumtenens.com/' target='_blank'>www.locumtenens.com</a> using the <strong>email on file in Salesforce</strong> and the associated password.",
+      "Click <strong>CREDENTIALS</strong> from the top navigation.",
+      "Select <strong>Credentialing Overview</strong>.",
+      "Click <strong>\"Start my re-credentialing application\"</strong>.",
+      "The provider will be <strong>automatically redirected</strong> to begin their re-credentialing in Axuall."
+    ],
+    tips: [
+      "Google Chrome is recommended and resolves most access issues.",
+      "Clearing browser cache can fix slow loading, blank screens, or looping behavior.",
+      "Axuall requires <strong>third-party cookies</strong> to be enabled.",
+      "Try a different device if the issue persists."
+    ],
+    warnings: [],
+    notes: []
+  },
+  {
+    id: 9,
+    category: "axuall",
+    icon: "🪪",
+    title: "Axuall Identity Verification Error",
+    description: "Provider cannot complete identity verification in Axuall during credentialing or re-credentialing.",
+    causes: [
+      "<strong>Name mismatch:</strong> Name in Axuall does not exactly match the government-issued ID (middle name vs. initial, maiden vs. married name, hyphenated names, suffixes like Jr./Sr./III)",
+      "<strong>DOB mismatch:</strong> Date of birth entered incorrectly in Axuall",
+      "<strong>SSN mismatch:</strong> Typo or transposed numbers in the Social Security Number"
+    ],
+    steps: [
+      "Inform the provider this is an identity verification issue that <strong>LocumTenens cannot resolve</strong> on their behalf, as it involves sensitive personal information.",
+      "Direct the provider to contact <strong>Axuall Support</strong> directly: <strong>888-298-1730</strong>.",
+      "If Axuall Support cannot resolve the issue, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>TechOpsHelpdesk@locumtenens.com</a>."
+    ],
+    tips: [],
+    warnings: [
+      "Axuall is extremely literal — even minor discrepancies (a missing suffix, middle initial vs. full name) will cause verification to fail. The provider must contact Axuall Support directly."
+    ],
+    notes: [
+      "Common error messages: \"Identity verification failed\", \"We were unable to verify your identity\", or being looped back to the identity verification screen."
+    ]
+  },
+  {
+    id: 10,
+    category: "docs",
+    icon: "🗃️",
+    title: "Document Library — What It Is &amp; How It Works",
+    description: "Understanding the Document Library and common provider confusion around document uploads.",
+    causes: [
+      "Provider tries to upload documents before completing their credentialing application",
+      "Provider cannot be found in Axuall Admin Center",
+      "Documents uploaded but not appearing in Axuall"
+    ],
+    steps: [
+      "Clarify that the <strong>Document Library is for uploading additional documents AFTER the credentialing application is complete</strong>.",
+      "If a provider hasn't credentialed yet, LTOE will automatically redirect them to the <strong>Credentialing Overview</strong> tab.",
+      "If documents are not appearing in Axuall, verify that the provider has <strong>finished the credentialing application</strong> first.",
+      "If the provider cannot be found in the Axuall Admin Center, <strong>request a screenshot</strong> of what they are seeing to determine if they are still completing the application or attempting to upload documents prematurely."
+    ],
+    tips: [],
+    warnings: [],
+    notes: [
+      "Think of it this way: the Document Library is the <em>filing cabinet</em>; Credentialing is the <em>audit and verification process</em>. Having documents in the library does <strong>not</strong> mean a provider is credentialed.",
+      "Documents uploaded before the credentialing application is finished <strong>will not appear in Axuall</strong>."
+    ]
+  },
+  {
+    id: 11,
+    category: "axuall",
+    icon: "🤖",
+    title: "What Axuall Pre-Populates vs. What Providers Must Enter Manually",
+    description: "Understanding which fields auto-populate in the Axuall credentialing application.",
+    causes: [],
+    steps: [
+      "Inform the provider that Axuall <strong>auto-populates primary source data</strong> such as licenses, certifications, and verified identity/demographics.",
+      "Remind them that <strong>personal contact info, attestation questions, malpractice history, narrative answers, and signature fields</strong> must be entered manually.",
+      "For <strong>employment history and facility affiliations</strong>, Axuall may pre-fill partial data but the provider must review and correct dates, roles, and facility names.",
+      "If information is not pre-populating, confirm that the provider has completed <strong>identity verification</strong> in Axuall, as this unlocks demographic auto-fill."
+    ],
+    tips: [],
+    warnings: [],
+    notes: [
+      "<strong>Auto-populates:</strong> State licenses, expiration dates, board certifications, DEA, BLS/ACLS/PALS, NPI, name, DOB (after identity verification).",
+      "<strong>Does NOT auto-populate:</strong> Preferred phone, home/mailing address, attestation questions (disciplinary history, convictions), malpractice explanations, narrative/explanation fields."
+    ]
+  },
+  {
+    id: 12,
+    category: "cred",
+    icon: "⏱️",
+    title: "Credentialing Documents Taking Too Long to Appear in Salesforce",
+    description: "Credentialing documents submitted in Axuall are not yet visible in Salesforce.",
+    causes: [
+      "Normal system sync delay between Axuall and Salesforce"
+    ],
+    steps: [
+      "Reassure the recruiter or CR that this is <strong>expected behavior</strong>.",
+      "Credentialing documents can take <strong>up to 24 hours</strong> to sync from Axuall to Salesforce.",
+      "Do not open a support case or report missing documents until the 24-hour window has passed.",
+      "If documents are still missing after 24 hours, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>TechOpsHelpdesk@locumtenens.com</a>."
+    ],
+    tips: [
+      "This delay is normal and should be expected. No action is needed during the sync window."
+    ],
+    warnings: [],
+    notes: []
+  },
+  {
+    id: 13,
+    category: "portal",
+    icon: "📊",
+    title: "Provider Status Shows 'Application Started' or 'Application Sent' After Completing",
+    description: "Provider completed the credentialing application but status still shows in-progress.",
+    causes: [
+      "Provider may still be completing the application in Axuall",
+      "Provider may be attempting to upload documents in the Document Library before credentialing is fully complete"
+    ],
+    steps: [
+      "Confirm whether the provider has <strong>fully submitted</strong> the application in Axuall (not just started it).",
+      "Ask the provider for a <strong>screenshot</strong> of what they are seeing in the portal.",
+      "Verify the provider is not confused between the <strong>Document Library</strong> and the <strong>Credentialing Application</strong>.",
+      "If the provider has truly completed everything and the status is incorrect after 24 hours, escalate to TechOps."
+    ],
+    tips: [],
+    warnings: [],
+    notes: []
+  }
+];
+
+// ── State ──
+let activeCategory = "all";
+let searchQuery = "";
+
+// ── DOM refs ──
+const searchInput   = document.getElementById("searchInput");
+const clearBtn      = document.getElementById("clearSearch");
+const issueList     = document.getElementById("issueList");
+const noResults     = document.getElementById("noResults");
+const resultMeta    = document.getElementById("resultMeta");
+const catButtons    = document.querySelectorAll(".category-list button");
+
+// ── Helpers ──
+function normalize(str) {
+  return str.toLowerCase().replace(/<[^>]*>/g, "");
+}
+
+function highlight(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`(${escaped})`, "gi");
+  // Only highlight in text nodes, not HTML tags
+  return text.replace(/>([^<]*)</g, (match, p1) => {
+    return ">" + p1.replace(re, "<mark>$1</mark>") + "<";
+  });
+}
+
+function issueMatchesSearch(issue, query) {
+  if (!query) return true;
+  const q = query.toLowerCase();
+  const haystack = [
+    issue.title,
+    issue.description,
+    ...(issue.causes || []),
+    ...(issue.steps || []),
+    ...(issue.tips || []),
+    ...(issue.warnings || []),
+    ...(issue.notes || [])
+  ].map(normalize).join(" ");
+  return haystack.includes(q);
+}
+
+function issueMatchesCategory(issue, cat) {
+  return cat === "all" || issue.category === cat;
+}
+
+function getCategoryLabel(cat) {
+  const map = {
+    login: "Login & Account",
+    docs: "Documents",
+    email: "Email & Invites",
+    cred: "Credentialing",
+    axuall: "Axuall",
+    mobile: "Mobile & Browser",
+    portal: "Portal & Tabs"
+  };
+  return map[cat] || cat;
+}
+
+// ── Render ──
+function renderIssues() {
+  const filtered = ISSUES.filter(
+    i => issueMatchesCategory(i, activeCategory) && issueMatchesSearch(i, searchQuery)
+  );
+
+  issueList.innerHTML = "";
+
+  if (filtered.length === 0) {
+    noResults.style.display = "block";
+    resultMeta.innerHTML = "";
+    return;
+  }
+  noResults.style.display = "none";
+
+  if (searchQuery) {
+    resultMeta.innerHTML = `Showing <strong>${filtered.length}</strong> result${filtered.length !== 1 ? "s" : ""} for &ldquo;${searchQuery}&rdquo;`;
+  } else if (activeCategory !== "all") {
+    resultMeta.innerHTML = `Showing <strong>${filtered.length}</strong> issue${filtered.length !== 1 ? "s" : ""} in <strong>${getCategoryLabel(activeCategory)}</strong>`;
+  } else {
+    resultMeta.innerHTML = `Showing all <strong>${filtered.length}</strong> issues`;
+  }
+
+  filtered.forEach(issue => {
+    const card = document.createElement("div");
+    card.className = `issue-card cat-${issue.category}`;
+    card.dataset.id = issue.id;
+
+    const titleHL = highlight(issue.title, searchQuery);
+    const descHL  = highlight(issue.description, searchQuery);
+
+    let bodyHTML = "";
+
+    // Causes
+    if (issue.causes && issue.causes.length) {
+      bodyHTML += `<div class="section-label">Common Causes</div>`;
+      bodyHTML += `<ul class="causes">`;
+      issue.causes.forEach(c => {
+        bodyHTML += `<li>${highlight(c, searchQuery)}</li>`;
+      });
+      bodyHTML += `</ul>`;
+    }
+
+    // Steps
+    if (issue.steps && issue.steps.length) {
+      bodyHTML += `<div class="section-label">Step-by-Step Resolution</div>`;
+      bodyHTML += `<ol class="steps">`;
+      issue.steps.forEach(s => {
+        bodyHTML += `<li><span>${highlight(s, searchQuery)}</span></li>`;
+      });
+      bodyHTML += `</ol>`;
+    }
+
+    // Warnings
+    if (issue.warnings && issue.warnings.length) {
+      issue.warnings.forEach(w => {
+        bodyHTML += `<div class="warn-box"><span class="box-icon">&#9888;</span><p>${highlight(w, searchQuery)}</p></div>`;
+      });
+    }
+
+    // Tips
+    if (issue.tips && issue.tips.length) {
+      issue.tips.forEach(t => {
+        bodyHTML += `<div class="tip-box"><span class="box-icon">&#128161;</span><p>${highlight(t, searchQuery)}</p></div>`;
+      });
+    }
+
+    // Notes
+    if (issue.notes && issue.notes.length) {
+      issue.notes.forEach(n => {
+        bodyHTML += `<div class="info-box"><span class="box-icon">&#8505;</span><p>${highlight(n, searchQuery)}</p></div>`;
+      });
+    }
+
+    card.innerHTML = `
+      <div class="card-header" role="button" tabindex="0" aria-expanded="false">
+        <div class="card-icon">${issue.icon}</div>
+        <div class="card-title-block">
+          <h3>${titleHL}</h3>
+          <div class="card-desc">${descHL}</div>
+        </div>
+        <div class="card-meta">
+          <span class="badge">${getCategoryLabel(issue.category)}</span>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="card-body">${bodyHTML}</div>
+    `;
+
+    const header = card.querySelector(".card-header");
+    header.addEventListener("click", () => toggleCard(card, header));
+    header.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleCard(card, header); }
+    });
+
+    // Auto-open on search
+    if (searchQuery) {
+      card.classList.add("open");
+      header.setAttribute("aria-expanded", "true");
+    }
+
+    issueList.appendChild(card);
+  });
+
+  updateCounts();
+}
+
+function toggleCard(card, header) {
+  const isOpen = card.classList.toggle("open");
+  header.setAttribute("aria-expanded", isOpen);
+}
+
+function updateCounts() {
+  const cats = ["all", "login", "docs", "email", "cred", "axuall", "mobile", "portal"];
+  cats.forEach(cat => {
+    const count = cat === "all"
+      ? ISSUES.filter(i => issueMatchesSearch(i, searchQuery)).length
+      : ISSUES.filter(i => i.category === cat && issueMatchesSearch(i, searchQuery)).length;
+    const el = document.getElementById(`cnt-${cat}`);
+    if (el) el.textContent = count;
+  });
+}
+
+// ── Events ──
+searchInput.addEventListener("input", () => {
+  searchQuery = searchInput.value.trim();
+  if (searchQuery) {
+    activeCategory = "all";
+    catButtons.forEach(b => b.classList.remove("active"));
+    document.querySelector('[data-cat="all"]').classList.add("active");
+  }
+  renderIssues();
+});
+
+clearBtn.addEventListener("click", () => {
+  searchInput.value = "";
+  searchQuery = "";
+  renderIssues();
+  searchInput.focus();
+});
+
+catButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeCategory = btn.dataset.cat;
+    catButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    searchInput.value = "";
+    searchQuery = "";
+    renderIssues();
+  });
+});
+
+// ── Init ──
+renderIssues();
+</script>
+</body>
+</html>
