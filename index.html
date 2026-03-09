@@ -160,9 +160,38 @@
       font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.06em; color: var(--brand-dark); margin-bottom: 5px;
     }
-    .contact-card p { font-size: 0.78rem; color: var(--brand-dark); margin-bottom: 2px; }
-    .contact-card a { color: var(--brand); text-decoration: none; font-weight: 500; }
+    .contact-card p { font-size: 0.78rem; color: var(--brand-dark); margin-bottom: 2px; word-break: break-word; }
+    .contact-card a { color: var(--brand); text-decoration: none; font-weight: 500; word-break: break-all; }
     .contact-card a:hover { text-decoration: underline; }
+    .escalation-toggle-btn {
+      display: block; width: 100%; text-align: center;
+      background: none; border: 1px solid var(--brand);
+      border-radius: 5px; padding: 5px 8px;
+      font-size: 0.72rem; font-weight: 600;
+      color: var(--brand); cursor: pointer;
+      font-family: inherit; margin-top: 8px;
+      transition: background 0.15s;
+    }
+    .escalation-toggle-btn:hover { background: rgba(0,87,168,0.08); }
+    .escalation-panel { display: none; margin-top: 8px; }
+    .escalation-text {
+      font-size: 0.72rem; white-space: pre;
+      font-family: inherit; color: var(--brand-dark);
+      line-height: 1.75; background: rgba(0,87,168,0.07);
+      border-radius: 5px; padding: 8px 9px;
+      display: block; width: 100%;
+    }
+    .escalation-copy-btn {
+      display: block; width: 100%; text-align: center;
+      background: var(--brand); color: #fff;
+      border: none; border-radius: 5px;
+      padding: 5px 8px; font-size: 0.72rem;
+      font-weight: 600; cursor: pointer;
+      font-family: inherit; margin-top: 6px;
+      transition: background 0.15s;
+    }
+    .escalation-copy-btn:hover { background: var(--brand-dark); }
+    .escalation-copy-btn.copied { background: var(--accent); }
 
     /* ── Browse main ── */
     .main { min-width: 0; }
@@ -241,6 +270,15 @@
     .info-box p, .warn-box p, .tip-box p { margin: 0; line-height: 1.5; }
 
     mark { background: #fff176; color: inherit; border-radius: 2px; padding: 0 1px; }
+
+    .inline-link-btn {
+      background: none; border: none;
+      color: var(--brand); font-weight: 600;
+      font-size: 0.82rem; cursor: pointer;
+      padding: 0; font-family: inherit;
+      text-decoration: underline; text-underline-offset: 2px;
+    }
+    .inline-link-btn:hover { color: var(--brand-dark); }
 
     /* Category themes */
     .cat-login  .card-icon { background: #e3f2fd; color: #1565c0; }
@@ -504,7 +542,19 @@
         <p>Manager: Kelly Thompson</p>
         <p><a href="mailto:techopshelpdesk@locumtenens.com">techopshelpdesk@locumtenens.com</a></p>
         <p>Phone: <a href="tel:8777327080">877-732-7080</a></p>
-        <p style="margin-top:6px;font-size:0.73rem;opacity:0.8;">Include: Provider Name, Issue, SF Link, Screenshots</p>
+        <button class="escalation-toggle-btn" onclick="toggleEscalationTemplate(this)">Copy Ticket Template</button>
+        <div class="escalation-panel">
+          <pre class="escalation-text">Provider Name:
+
+Salesforce Link:
+
+Issue Description:
+
+Steps Already Taken:
+
+Screenshots Attached: Yes / No</pre>
+          <button class="escalation-copy-btn" onclick="copyEscalationTemplate(this)">Copy</button>
+        </div>
       </div>
     </aside>
     <main class="main">
@@ -756,7 +806,8 @@ Please don't hesitate to reach out if you need further assistance!
       "Locate the <strong>LTOE Username</strong> field and confirm it matches the provider's email exactly.",
       "To check portal verification: Salesforce &rarr; Details tab &rarr; scroll to <strong>Clinician Portal Verification</strong>.",
       "If the email and LTOE username do not match, submit a ticket to <a href='mailto:lthelpdesk@locumtenens.com'>lthelpdesk@locumtenens.com</a>.",
-      "If the portal is unverified, resend the LT Online Experience invite so the provider can verify their account."
+      "If the portal is unverified, resend the LT Online Experience invite so the provider can verify their account.",
+      "If everything looks correct in Salesforce, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>techopshelpdesk@locumtenens.com</a>."
     ],
     tips: [],
     warnings: ["A provider's email in Salesforce <strong>cannot</strong> be changed if their portal is already verified. A ticket must be submitted to LT Helpdesk to request this change."],
@@ -805,7 +856,11 @@ We will follow up as soon as we have an update. Please don't hesitate to reach o
       "Axuall requires <strong>third-party cookies</strong> to be enabled.",
       "If still blocked, try a different device."
     ],
-    warnings: [], notes: [],
+    warnings: [],
+    notes: [
+      "If the <strong>Authenticate button does nothing</strong>, this is almost always a pop-up blocker. <button class='inline-link-btn' onclick='openInBrowse(8)'>View Pop-Up Blocker Fix &rarr;</button>",
+      "Provider can't see the <strong>Credentials tab</strong> at all? <button class='inline-link-btn' onclick='openInBrowse(6)'>View Missing Credentials Tab Fix &rarr;</button>"
+    ],
     email: {
       subject: "How to Access Your Credentialing Application",
       body: `Hi [Provider Name],
@@ -855,7 +910,8 @@ Please don't hesitate to reach out if you have any questions!
     ],
     steps: [
       "<strong>Recommend Google Chrome first</strong> — this resolves the issue in the majority of cases, especially for Safari users.",
-      "If the provider prefers Safari: check for a <strong>pop-up blocked notification</strong> in the address bar and allow pop-ups for locumtenens.com.",
+      "In Chrome: look for the <strong>pop-up blocked icon</strong> (a small window with an X) in the <strong>top-right of the address bar</strong> → click it → select <strong>\"Always allow pop-ups and redirects from locumtenens.com\"</strong> → click <strong>Done</strong>.",
+      "If the provider prefers Safari: go to Safari &rarr; Settings &rarr; Websites &rarr; Pop-up Windows &rarr; set locumtenens.com to <strong>Allow</strong>.",
       "Enable <strong>third-party cookies</strong> in browser settings. In Chrome: Settings &rarr; Privacy and Security &rarr; Cookies &rarr; Allow third-party cookies.",
       "Have the provider <strong>clear their browser cache</strong> and try again.",
       "If still not working, try a <strong>different device</strong> entirely."
@@ -1560,6 +1616,29 @@ function initChat() {
   ).join("");
   addMessage(`Hello! I'm the TechOps support assistant for LocumTenens.com.<br><br>Describe a provider issue in your own words and I'll walk you through the fix — including a ready-to-send email template for the provider. Try something like <em>"the authenticate button isn't doing anything"</em> or <em>"provider can't find their credentials tab."</em><br><br><div class="suggestions-wrap"><div class="suggestions-label">Or pick a common issue:</div><div class="suggestion-chips">${chips}</div></div>`, "bot");
 }
+
+function toggleEscalationTemplate(btn) {
+  const panel = btn.nextElementSibling;
+  const opening = panel.style.display !== "block";
+  panel.style.display = opening ? "block" : "none";
+  btn.textContent = opening ? "Hide Template" : "Copy Ticket Template";
+}
+window.toggleEscalationTemplate = toggleEscalationTemplate;
+
+function copyEscalationTemplate(btn) {
+  const text = "Provider Name:\n\nSalesforce Link:\n\nIssue Description:\n\nSteps Already Taken:\n\nScreenshots Attached: Yes / No";
+  const finish = () => {
+    btn.classList.add("copied");
+    btn.textContent = "✓ Copied!";
+    setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 2000);
+  };
+  navigator.clipboard.writeText(text).then(finish).catch(() => {
+    const ta = Object.assign(document.createElement("textarea"), { value: text });
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+    finish();
+  });
+}
+window.copyEscalationTemplate = copyEscalationTemplate;
 
 renderBrowse();
 initChat();
