@@ -422,6 +422,11 @@
       border-radius: 7px; padding: 8px 11px;
       font-size: 0.815rem; color: #1b5e20; margin-top: 9px; line-height: 1.45;
     }
+    .crc-note {
+      background: var(--info-bg); border: 1px solid #90caf9;
+      border-radius: 7px; padding: 8px 11px;
+      font-size: 0.815rem; color: #0d47a1; margin-top: 9px; line-height: 1.5;
+    }
     .view-browse-btn {
       display: inline-block; margin-top: 10px;
       font-size: 0.8rem; color: var(--brand);
@@ -858,8 +863,8 @@ We will follow up as soon as we have an update. Please don't hesitate to reach o
     ],
     warnings: [],
     notes: [
-      "If the <strong>Authenticate button does nothing</strong>, this is almost always a pop-up blocker. <button class='inline-link-btn' onclick='openInBrowse(8)'>View Pop-Up Blocker Fix &rarr;</button>",
-      "Provider can't see the <strong>Credentials tab</strong> at all? <button class='inline-link-btn' onclick='openInBrowse(6)'>View Missing Credentials Tab Fix &rarr;</button>"
+      "&#9888; If the Authenticate button is not working, this is most likely a pop-up blocker issue. See the Pop-Up Blocker fix for instructions to send the provider. <button class='inline-link-btn' onclick='openInBrowse(8)'>View Pop-Up Blocker Fix &rarr;</button>",
+      "<button class='inline-link-btn' onclick='openInBrowse(6)'>Is the Credentials tab missing? View instructions &rarr;</button>"
     ],
     email: {
       subject: "How to Access Your Credentialing Application",
@@ -1493,6 +1498,7 @@ function buildChatCard(issue) {
   let extraHtml = "";
   issue.warnings?.forEach(w => { extraHtml += `<div class="crc-warn">&#9888; ${w}</div>`; });
   issue.tips?.slice(0,1).forEach(t => { extraHtml += `<div class="crc-tip">&#128161; ${t}</div>`; });
+  issue.notes?.forEach(n => { extraHtml += `<div class="crc-note">${n}</div>`; });
 
   // Email section inside chat card uses same builder, wrapped in crc-email-section for spacing
   const emailHtml = issue.email ? `<div class="crc-email-section">${buildEmailSection(issue)}</div>` : "";
