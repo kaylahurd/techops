@@ -53,46 +53,26 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
-      padding-bottom: 0;
     }
-    .header-title h1 {
-      font-size: 1.45rem;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-    .header-title p {
-      font-size: 0.82rem;
-      opacity: 0.82;
-      margin-top: 2px;
-    }
+    .header-title h1 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.3px; }
+    .header-title p  { font-size: 0.82rem; opacity: 0.82; margin-top: 2px; }
 
-    /* Tab nav inside header */
-    .tab-nav {
-      display: flex;
-      gap: 4px;
-      align-self: flex-end;
-    }
+    .tab-nav { display: flex; gap: 4px; align-self: flex-end; }
     .tab-nav button {
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.25);
       color: rgba(255,255,255,0.85);
       padding: 8px 20px;
       border-radius: 8px 8px 0 0;
-      font-size: 0.875rem;
-      font-weight: 500;
+      font-size: 0.875rem; font-weight: 500;
       cursor: pointer;
       transition: background 0.18s, color 0.18s;
       border-bottom: none;
     }
     .tab-nav button:hover { background: rgba(255,255,255,0.22); color: #fff; }
-    .tab-nav button.active {
-      background: var(--bg);
-      color: var(--brand);
-      font-weight: 700;
-      border-color: transparent;
-    }
+    .tab-nav button.active { background: var(--bg); color: var(--brand); font-weight: 700; border-color: transparent; }
 
-    /* Search bar strip — only shown on Browse tab */
+    /* ── Search strip ── */
     .search-strip {
       background: var(--bg);
       border-bottom: 1px solid var(--border);
@@ -102,47 +82,23 @@
       z-index: 190;
     }
     .search-strip.hidden { display: none; }
-    .search-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .search-inner svg {
-      position: absolute;
-      left: 13px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-      pointer-events: none;
-    }
+    .search-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+    .search-inner svg { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
     #searchInput {
-      width: 100%;
-      max-width: 560px;
+      width: 100%; max-width: 560px;
       padding: 9px 38px 9px 40px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      font-size: 0.9rem;
-      background: #fff;
-      color: var(--text);
+      border-radius: 8px; border: 1px solid var(--border);
+      font-size: 0.9rem; background: #fff; color: var(--text);
       outline: none;
       box-shadow: 0 1px 4px rgba(0,0,0,0.06);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     #searchInput:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0,87,168,0.12); }
     #clearSearch {
-      position: absolute;
-      left: 526px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 1.1rem;
-      display: none;
-      padding: 2px 6px;
+      position: absolute; left: 526px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--muted); font-size: 1.1rem; display: none; padding: 2px 6px;
     }
-    #searchInput:not([value=""]) ~ #clearSearch,
     #searchInput.has-value ~ #clearSearch { display: block; }
 
     /* ── Panel system ── */
@@ -167,70 +123,42 @@
 
     /* ── Sidebar ── */
     .sidebar {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px 0;
-      position: sticky;
-      top: 148px;
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 16px 0;
+      position: sticky; top: 148px;
     }
     .sidebar h2 {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      padding: 0 16px 10px;
-      border-bottom: 1px solid var(--border);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 0 16px 10px; border-bottom: 1px solid var(--border);
     }
     .category-list { list-style: none; padding: 6px 0; }
     .category-list li button {
-      width: 100%;
-      text-align: left;
-      background: none;
-      border: none;
-      padding: 8px 16px;
-      font-size: 0.855rem;
-      color: var(--text);
-      cursor: pointer;
-      border-left: 3px solid transparent;
+      width: 100%; text-align: left; background: none; border: none;
+      padding: 8px 16px; font-size: 0.855rem; color: var(--text);
+      cursor: pointer; border-left: 3px solid transparent;
       transition: background 0.15s, border-color 0.15s, color 0.15s;
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      display: flex; align-items: center; gap: 7px;
     }
     .category-list li button:hover { background: var(--brand-light); color: var(--brand); }
     .category-list li button.active {
-      background: var(--brand-light);
-      color: var(--brand);
-      border-left-color: var(--brand);
-      font-weight: 600;
+      background: var(--brand-light); color: var(--brand);
+      border-left-color: var(--brand); font-weight: 600;
     }
     .cat-count {
-      margin-left: auto;
-      background: var(--border);
-      color: var(--muted);
-      font-size: 0.7rem;
-      font-weight: 700;
-      border-radius: 20px;
-      padding: 1px 7px;
+      margin-left: auto; background: var(--border); color: var(--muted);
+      font-size: 0.7rem; font-weight: 700; border-radius: 20px; padding: 1px 7px;
     }
     .category-list li button.active .cat-count { background: var(--brand); color: #fff; }
 
     .contact-card {
       margin: 10px 12px 0;
-      background: var(--brand-light);
-      border-radius: 8px;
-      padding: 11px 13px;
-      border: 1px solid #c8d9f0;
+      background: var(--brand-light); border-radius: 8px;
+      padding: 11px 13px; border: 1px solid #c8d9f0;
     }
     .contact-card h3 {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--brand-dark);
-      margin-bottom: 5px;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--brand-dark); margin-bottom: 5px;
     }
     .contact-card p { font-size: 0.78rem; color: var(--brand-dark); margin-bottom: 2px; }
     .contact-card a { color: var(--brand); text-decoration: none; font-weight: 500; }
@@ -240,18 +168,14 @@
     .main { min-width: 0; }
     .result-meta { font-size: 0.82rem; color: var(--muted); margin-bottom: 14px; min-height: 20px; }
     .result-meta strong { color: var(--text); }
-
     #noResults { display: none; text-align: center; padding: 60px 20px; color: var(--muted); }
     #noResults h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--text); }
 
     /* ── Issue card ── */
     .issue-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      margin-bottom: 14px;
-      border: 1px solid var(--border);
-      overflow: hidden;
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); margin-bottom: 14px;
+      border: 1px solid var(--border); overflow: hidden;
       transition: box-shadow 0.2s;
     }
     .issue-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.11); }
@@ -260,23 +184,16 @@
       0%,100% { box-shadow: var(--shadow); }
       40% { box-shadow: 0 0 0 4px rgba(0,87,168,0.25), 0 4px 18px rgba(0,0,0,0.1); }
     }
-
     .card-header {
-      padding: 15px 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      user-select: none;
-      transition: background 0.15s;
+      padding: 15px 18px; cursor: pointer;
+      display: flex; align-items: flex-start; gap: 12px;
+      user-select: none; transition: background 0.15s;
     }
     .card-header:hover { background: #fafbfd; }
     .card-icon {
-      width: 36px; height: 36px;
-      border-radius: 8px;
+      width: 36px; height: 36px; border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      font-size: 1.05rem;
+      flex-shrink: 0; font-size: 1.05rem;
     }
     .card-title-block { flex: 1; min-width: 0; }
     .card-title-block h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 2px; line-height: 1.35; }
@@ -285,7 +202,6 @@
     .badge { font-size: 0.68rem; font-weight: 700; border-radius: 20px; padding: 2px 9px; text-transform: uppercase; letter-spacing: 0.04em; }
     .chevron { color: var(--muted); transition: transform 0.25s; flex-shrink: 0; }
     .issue-card.open .chevron { transform: rotate(180deg); }
-
     .card-body { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); }
     .issue-card.open .card-body { display: block; }
 
@@ -295,15 +211,15 @@
     }
     .steps { list-style: none; counter-reset: steps; }
     .steps li {
-      counter-increment: steps;
-      display: flex; gap: 11px; margin-bottom: 9px; font-size: 0.865rem;
+      counter-increment: steps; display: flex; gap: 11px;
+      margin-bottom: 9px; font-size: 0.865rem;
     }
     .steps li::before {
       content: counter(steps);
-      background: var(--brand); color: #fff;
-      border-radius: 50%; width: 21px; height: 21px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+      background: var(--brand); color: #fff; border-radius: 50%;
+      width: 21px; height: 21px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.7rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
     }
     .causes { list-style: none; padding: 0; }
     .causes li {
@@ -314,11 +230,9 @@
       content: ""; position: absolute; left: 4px; top: 12px;
       width: 6px; height: 6px; border-radius: 50%; background: var(--muted);
     }
-
     .info-box, .warn-box, .tip-box {
-      border-radius: 8px; padding: 10px 13px;
-      font-size: 0.83rem; margin-top: 9px;
-      display: flex; gap: 9px; align-items: flex-start;
+      border-radius: 8px; padding: 10px 13px; font-size: 0.83rem;
+      margin-top: 9px; display: flex; gap: 9px; align-items: flex-start;
     }
     .info-box { background: var(--info-bg); border: 1px solid #90caf9; color: #0d47a1; }
     .warn-box  { background: var(--warn-bg); border: 1px solid #ef9a9a; color: var(--warn); }
@@ -336,7 +250,6 @@
     .cat-axuall .card-icon { background: #f3e5f5; color: #6a1b9a; }
     .cat-mobile .card-icon { background: #e0f7fa; color: #006064; }
     .cat-portal .card-icon { background: #f5f5f5; color: #424242; }
-
     .cat-login  .badge { background: #e3f2fd; color: #1565c0; }
     .cat-docs   .badge { background: #fce4ec; color: #880e4f; }
     .cat-email  .badge { background: #e8f5e9; color: #2e7d32; }
@@ -345,211 +258,173 @@
     .cat-mobile .badge { background: #e0f7fa; color: #006064; }
     .cat-portal .badge { background: #f5f5f5; color: #424242; border: 1px solid #ddd; }
 
-    /* ── Chat panel ── */
-    #chatPanel {
-      max-width: 820px;
-      margin: 28px auto 0;
-      padding: 0 20px 60px;
+    /* ── Email section ── */
+    .email-section {
+      margin-top: 14px;
+      padding-top: 13px;
+      border-top: 1px solid var(--border);
     }
-
-    .chat-window {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .email-toggle-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: none;
       border: 1px solid var(--border);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      height: calc(100vh - 200px);
-      min-height: 500px;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.79rem; font-weight: 600;
+      color: var(--brand);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      font-family: inherit;
     }
+    .email-toggle-btn:hover { background: var(--brand-light); border-color: var(--brand); }
+    .email-toggle-btn.active { background: var(--brand-light); border-color: var(--brand); }
+    .email-panel {
+      display: none;
+      margin-top: 10px;
+      background: #f8f9fc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 13px;
+    }
+    .email-subject {
+      font-size: 0.79rem; font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .email-body {
+      font-size: 0.79rem;
+      white-space: pre-wrap;
+      font-family: inherit;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 11px;
+    }
+    .copy-email-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--brand); color: #fff;
+      border: none; border-radius: 6px;
+      padding: 6px 13px;
+      font-size: 0.77rem; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+      transition: background 0.18s;
+    }
+    .copy-email-btn:hover { background: var(--brand-dark); }
+    .copy-email-btn.copied { background: var(--accent); }
 
+    /* ── Chat panel ── */
+    #chatPanel { max-width: 820px; margin: 28px auto 0; padding: 0 20px 60px; }
+    .chat-window {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); border: 1px solid var(--border);
+      overflow: hidden; display: flex; flex-direction: column;
+      height: calc(100vh - 200px); min-height: 500px;
+    }
     .chat-messages {
-      flex: 1;
-      overflow-y: auto;
+      flex: 1; overflow-y: auto;
       padding: 24px 20px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      display: flex; flex-direction: column; gap: 16px;
       scroll-behavior: smooth;
     }
-
-    /* Message rows */
     .msg-row { display: flex; gap: 10px; align-items: flex-start; }
     .msg-row.user { flex-direction: row-reverse; }
-
     .avatar {
       width: 34px; height: 34px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
     }
-    .avatar.bot { background: var(--brand); color: #fff; }
+    .avatar.bot  { background: var(--brand); color: #fff; }
     .avatar.user { background: #e3f2fd; color: var(--brand); font-size: 0.75rem; }
-
     .bubble {
-      max-width: 80%;
-      border-radius: 14px;
-      padding: 11px 15px;
-      font-size: 0.875rem;
-      line-height: 1.55;
+      max-width: 80%; border-radius: 14px;
+      padding: 11px 15px; font-size: 0.875rem; line-height: 1.55;
     }
     .bubble.bot {
-      background: #f8f9fc;
-      border: 1px solid var(--border);
-      border-top-left-radius: 4px;
-      color: var(--text);
+      background: #f8f9fc; border: 1px solid var(--border);
+      border-top-left-radius: 4px; color: var(--text);
     }
-    .bubble.user {
-      background: var(--brand);
-      color: #fff;
-      border-top-right-radius: 4px;
-    }
+    .bubble.user { background: var(--brand); color: #fff; border-top-right-radius: 4px; }
 
-    /* Chat result card inside bubble */
+    /* Chat result card */
     .chat-result-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      margin-top: 10px;
-      overflow: hidden;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 9px; margin-top: 10px; overflow: hidden;
     }
-    .chat-result-card .crc-header {
-      background: var(--brand-light);
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
+    .crc-header {
+      background: var(--brand-light); padding: 10px 14px;
+      display: flex; align-items: center; gap: 9px;
       border-bottom: 1px solid var(--border);
     }
-    .chat-result-card .crc-icon {
-      font-size: 1.1rem;
+    .crc-icon { font-size: 1.1rem; }
+    .crc-title { font-weight: 700; font-size: 0.875rem; color: var(--brand-dark); flex: 1; }
+    .crc-badge {
+      font-size: 0.65rem; font-weight: 700; border-radius: 20px;
+      padding: 2px 8px; text-transform: uppercase; letter-spacing: 0.04em;
     }
-    .chat-result-card .crc-title {
-      font-weight: 700;
-      font-size: 0.875rem;
-      color: var(--brand-dark);
-      flex: 1;
+    .crc-body { padding: 12px 14px; }
+    .crc-steps { list-style: none; counter-reset: csteps; margin: 0; padding: 0; }
+    .crc-steps li {
+      counter-increment: csteps; display: flex; gap: 10px;
+      margin-bottom: 8px; font-size: 0.845rem; color: var(--text);
     }
-    .chat-result-card .crc-badge {
-      font-size: 0.65rem;
-      font-weight: 700;
-      border-radius: 20px;
-      padding: 2px 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .chat-result-card .crc-body {
-      padding: 12px 14px;
-    }
-    .chat-result-card .crc-steps {
-      list-style: none;
-      counter-reset: csteps;
-      margin: 0;
-      padding: 0;
-    }
-    .chat-result-card .crc-steps li {
-      counter-increment: csteps;
-      display: flex;
-      gap: 10px;
-      margin-bottom: 8px;
-      font-size: 0.845rem;
-      color: var(--text);
-    }
-    .chat-result-card .crc-steps li::before {
+    .crc-steps li::before {
       content: counter(csteps);
-      background: var(--brand); color: #fff;
-      border-radius: 50%; width: 20px; height: 20px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.68rem; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+      background: var(--brand); color: #fff; border-radius: 50%;
+      width: 20px; height: 20px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.68rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 1px;
     }
-    .chat-result-card .crc-warn {
+    .crc-warn {
       background: var(--warn-bg); border: 1px solid #ef9a9a;
       border-radius: 7px; padding: 8px 11px;
-      font-size: 0.815rem; color: var(--warn);
-      margin-top: 9px; line-height: 1.45;
+      font-size: 0.815rem; color: var(--warn); margin-top: 9px; line-height: 1.45;
     }
-    .chat-result-card .crc-tip {
+    .crc-tip {
       background: var(--tip-bg); border: 1px solid var(--tip-border);
       border-radius: 7px; padding: 8px 11px;
-      font-size: 0.815rem; color: #1b5e20;
-      margin-top: 9px; line-height: 1.45;
+      font-size: 0.815rem; color: #1b5e20; margin-top: 9px; line-height: 1.45;
     }
     .view-browse-btn {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 0.8rem;
-      color: var(--brand);
-      text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
+      display: inline-block; margin-top: 10px;
+      font-size: 0.8rem; color: var(--brand);
+      font-weight: 600; cursor: pointer;
+      background: none; border: none; padding: 0; font-family: inherit;
     }
     .view-browse-btn:hover { text-decoration: underline; }
 
-    .also-related {
+    /* Email section inside chat card */
+    .crc-email-section {
       margin-top: 10px;
-      font-size: 0.815rem;
-      color: var(--muted);
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
     }
+
+    .also-related { margin-top: 10px; font-size: 0.815rem; color: var(--muted); }
     .also-related strong { color: var(--text); font-size: 0.82rem; }
     .related-chip {
       display: inline-block;
-      background: var(--brand-light);
-      color: var(--brand);
-      border: 1px solid #c8d9f0;
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin: 4px 4px 0 0;
-      transition: background 0.15s;
+      background: var(--brand-light); color: var(--brand);
+      border: 1px solid #c8d9f0; border-radius: 20px;
+      padding: 3px 10px; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; margin: 4px 4px 0 0; transition: background 0.15s;
     }
     .related-chip:hover { background: #d0e4f7; }
 
-    /* Suggestions */
-    .suggestions-wrap {
-      padding: 0 0 4px;
-    }
-    .suggestions-label {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .suggestion-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-    }
+    .suggestions-wrap { padding: 0 0 4px; }
+    .suggestions-label { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+    .suggestion-chips { display: flex; flex-wrap: wrap; gap: 7px; }
     .suggestion-chip {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 6px 13px;
-      font-size: 0.8rem;
-      color: var(--brand);
-      font-weight: 500;
-      cursor: pointer;
+      background: #fff; border: 1px solid var(--border); border-radius: 20px;
+      padding: 6px 13px; font-size: 0.8rem; color: var(--brand);
+      font-weight: 500; cursor: pointer;
       transition: background 0.15s, border-color 0.15s;
     }
-    .suggestion-chip:hover {
-      background: var(--brand-light);
-      border-color: var(--brand);
-    }
+    .suggestion-chip:hover { background: var(--brand-light); border-color: var(--brand); }
 
-    /* Typing indicator */
-    .typing-indicator .bubble {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 14px 16px;
-    }
+    .typing-indicator .bubble { display: flex; align-items: center; gap: 5px; padding: 14px 16px; }
     .dot {
       width: 7px; height: 7px; border-radius: 50%;
-      background: var(--muted);
-      animation: bounce 1.2s infinite;
+      background: var(--muted); animation: bounce 1.2s infinite;
     }
     .dot:nth-child(2) { animation-delay: 0.2s; }
     .dot:nth-child(3) { animation-delay: 0.4s; }
@@ -558,50 +433,31 @@
       30% { transform: translateY(-5px); }
     }
 
-    /* Chat footer */
     .chat-footer {
       border-top: 1px solid var(--border);
-      padding: 14px 16px;
-      display: flex;
-      gap: 10px;
-      background: #fff;
+      padding: 14px 16px; display: flex; gap: 10px; background: #fff;
     }
     #chatInput {
-      flex: 1;
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      background: var(--bg);
+      flex: 1; padding: 10px 14px; border-radius: 8px;
+      border: 1px solid var(--border); font-size: 0.9rem;
+      color: var(--text); outline: none; background: var(--bg);
+      transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit;
     }
     #chatInput:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(0,87,168,0.1); background: #fff; }
     #chatSend {
-      background: var(--brand);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.18s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      background: var(--brand); color: #fff; border: none;
+      border-radius: 8px; padding: 10px 20px;
+      font-size: 0.875rem; font-weight: 600; cursor: pointer;
+      transition: background 0.18s; display: flex; align-items: center; gap: 6px;
+      font-family: inherit;
     }
     #chatSend:hover { background: var(--brand-dark); }
     #chatSend:disabled { opacity: 0.5; cursor: not-allowed; }
 
     footer {
-      text-align: center;
-      padding: 18px;
-      font-size: 0.75rem;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      margin-top: 20px;
+      text-align: center; padding: 18px;
+      font-size: 0.75rem; color: var(--muted);
+      border-top: 1px solid var(--border); margin-top: 20px;
     }
   </style>
 </head>
@@ -614,13 +470,12 @@
       <p>LocumTenens.com &mdash; Internal reference for Recruiters &amp; CRs</p>
     </div>
     <nav class="tab-nav">
-      <button class="active" data-tab="browse" id="tabBrowse">Browse Issues</button>
-      <button data-tab="chat" id="tabChat">Ask a Question</button>
+      <button class="active" data-tab="browse">Browse Issues</button>
+      <button data-tab="chat">Ask a Question</button>
     </nav>
   </div>
 </header>
 
-<!-- Search strip (Browse only) -->
 <div class="search-strip" id="searchStrip">
   <div class="search-inner">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -629,7 +484,7 @@
   </div>
 </div>
 
-<!-- ── BROWSE PANEL ── -->
+<!-- BROWSE PANEL -->
 <div id="browsePanel" class="panel active">
   <div class="layout">
     <aside class="sidebar">
@@ -660,12 +515,10 @@
   </div>
 </div>
 
-<!-- ── CHAT PANEL ── -->
+<!-- CHAT PANEL -->
 <div id="chatPanel" class="panel">
   <div class="chat-window">
-    <div class="chat-messages" id="chatMessages">
-      <!-- Welcome message injected by JS -->
-    </div>
+    <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-footer">
       <input type="text" id="chatInput" placeholder="Describe the issue in your own words&hellip;" autocomplete="off" />
       <button id="chatSend">
@@ -693,8 +546,7 @@ const ISSUES = [
       "sharepoint", "pdf", "docx", "attachment", "vpn", "security restriction",
       "organization block", "wont open", "file not opening", "cannot open",
       "upload issue", "file upload", "file type", "wrong format", "headshot",
-      "document blocked", "download not working", "file blocked", "file format",
-      "cant open document", "file wont open", "document wont open"
+      "document blocked", "download not working", "file blocked", "cant open document"
     ],
     causes: [
       "Organization security restrictions on email or SharePoint",
@@ -709,7 +561,24 @@ const ISSUES = [
       "If the issue persists and an error references organizational blocking, <strong>escalate to TechOps</strong> for an email/security review."
     ],
     tips: ["Documents must be in <strong>.pdf</strong> or <strong>.docx</strong> format. Headshots should be in <strong>.jpg</strong>, <strong>.png</strong>, or another accepted image format."],
-    warnings: [], notes: []
+    warnings: [], notes: [],
+    email: {
+      subject: "Troubleshooting Your Document Upload Issue",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! Here are a few steps to help resolve the issue with opening or uploading documents:
+
+1. Try using Google Chrome — this resolves most upload and access issues.
+2. Clear your browser cache and try again.
+3. If you are connected to a VPN, please disconnect temporarily and retry the upload.
+4. Try from a different device or network if the issue continues.
+
+Please note: documents must be in .pdf or .docx format. Headshots should be in .jpg, .png, or another accepted image format.
+
+If you are still experiencing issues after trying these steps, please reply and we will escalate for further review.
+
+[Your Name]`
+    }
   },
   {
     id: 2, category: "email", icon: "✉️",
@@ -721,8 +590,7 @@ const ISSUES = [
       "junk", "lt_onlineservices", "onlineservices", "code not received",
       "not getting email", "email not arriving", "never received", "didnt receive",
       "no invite", "resend invite", "resend code", "not getting code",
-      "not getting invite", "email not coming", "missing invite", "missing code",
-      "not receiving invite", "invite not sent", "email never came"
+      "not getting invite", "email not coming", "missing invite", "missing code"
     ],
     causes: [],
     steps: [
@@ -732,7 +600,23 @@ const ISSUES = [
       "<strong>Resend</strong> the invite or verification code.",
       "If still not received, recommend adding <strong>LT_OnlineServices@locumtenens.com</strong> to their safe sender list."
     ],
-    tips: [], warnings: [], notes: []
+    tips: [], warnings: [], notes: [],
+    email: {
+      subject: "Action Required – Check Spam Folder for LocumTenens Emails",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! If you are not receiving emails from us, please take the following steps:
+
+1. Check your Spam or Junk folder for emails from LT_OnlineServices@locumtenens.com.
+2. Search your inbox for "LT_OnlineServices" to locate any filtered messages.
+3. Add LT_OnlineServices@locumtenens.com to your safe sender list to ensure future emails are delivered.
+
+Once you have checked, please let us know and we can resend your invite or verification code if needed.
+
+Please don't hesitate to reach out if you have any questions!
+
+[Your Name]`
+    }
   },
   {
     id: 3, category: "portal", icon: "🔍",
@@ -752,7 +636,24 @@ const ISSUES = [
       "Direct the provider to follow the <em>How to Access the Credentialing Application</em> steps to begin credentialing in Axuall."
     ],
     tips: [], warnings: [],
-    notes: ["The LT Online Experience invite verifies the account only. It does <strong>not</strong> initiate credentialing. Credentialing must be started separately through Axuall."]
+    notes: ["The LT Online Experience invite verifies the account only. It does <strong>not</strong> initiate credentialing. Credentialing must be started separately through Axuall."],
+    email: {
+      subject: "Next Steps to Begin Your Credentialing Application",
+      body: `Hi [Provider Name],
+
+Thank you for completing your account verification! Just to clarify — the invite you received was to verify your account only. It does not start your credentialing application.
+
+To begin your credentialing application, please follow these steps:
+
+1. Log in at www.locumtenens.com.
+2. Click CREDENTIALS from the top navigation.
+3. Select Credentialing Overview.
+4. Follow the prompts to be redirected to your credentialing application in Axuall.
+
+Please don't hesitate to reach out if you have any questions!
+
+[Your Name]`
+    }
   },
   {
     id: 4, category: "mobile", icon: "📱",
@@ -763,8 +664,7 @@ const ISSUES = [
       "something is broken", "something is definitely broken", "oh no something",
       "broken on mobile", "mobile error", "credentialing on phone", "phone error",
       "tablet", "mobile device", "mobile compatibility", "error on phone",
-      "broken message", "oh no", "definitely broken", "error message phone",
-      "mobile issue", "phone issue", "cant credential on phone"
+      "broken message", "oh no", "definitely broken", "error message phone"
     ],
     causes: ["Known mobile compatibility issue with the credentialing portal"],
     steps: [
@@ -773,7 +673,22 @@ const ISSUES = [
       "If possible, encourage them to switch to a <strong>desktop or laptop</strong> for the most reliable experience."
     ],
     tips: ["Completing credentialing on a desktop or laptop is always recommended for the best experience."],
-    warnings: [], notes: []
+    warnings: [], notes: [],
+    email: {
+      subject: "Action Required – Use This Link to Access Credentialing on Mobile",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! If you are seeing an error message on your phone while trying to access your credentialing application, this is a known compatibility issue with mobile browsers — nothing is actually wrong with your account.
+
+To access your credentialing application on a mobile device, please use this direct link:
+https://portal.locumtenens.com/#/credentials/overview
+
+For the best experience, we recommend completing your credentialing application on a desktop or laptop computer when possible.
+
+Please don't hesitate to reach out if you need further assistance!
+
+[Your Name]`
+    }
   },
   {
     id: 5, category: "login", icon: "🔒",
@@ -786,8 +701,7 @@ const ISSUES = [
       "wrong credentials", "password error", "username error", "locked account",
       "30 minutes", "unlock account", "cant sign in", "cannot sign in",
       "login not working", "login failed", "sign in failed", "password not working",
-      "wrong username", "incorrect username", "account not unlocking",
-      "how to reset password", "cant access account", "locked out of account"
+      "wrong username", "incorrect username", "cant access account", "locked out of account"
     ],
     causes: [],
     steps: [
@@ -799,7 +713,26 @@ const ISSUES = [
     ],
     tips: [],
     warnings: ["TechOps <strong>cannot manually unlock</strong> a locked account. Resetting the password will automatically unlock it, OR the provider may wait <strong>30 minutes</strong> for the lock to clear on its own."],
-    notes: []
+    notes: [],
+    email: {
+      subject: "Action Required – Reset Your Password to Regain Access",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! Here is how to reset your password and regain access to your account:
+
+1. Go to www.locumtenens.com and click Log In.
+2. Click "Forgot your password?"
+3. Enter the email address associated with your account.
+4. Enter the verification code sent to your email.
+5. Create a new password following the requirements listed on the page.
+6. Log in with your new password.
+
+Please note: if your account is locked, resetting your password will automatically unlock it. You may also wait 30 minutes for the lock to clear on its own.
+
+Please don't hesitate to reach out if you need further assistance!
+
+[Your Name]`
+    }
   },
   {
     id: 6, category: "portal", icon: "🗂️",
@@ -812,8 +745,7 @@ const ISSUES = [
       "username doesnt match", "username not matching", "missing credentials",
       "credentials tab not appearing", "credentials not visible", "no credentials",
       "credentials tab not there", "where is credentials tab",
-      "credentials tab disappeared", "tab not showing", "cant find credentials",
-      "credential tab missing", "no credential tab", "ltoe mismatch"
+      "credentials tab disappeared", "tab not showing", "cant find credentials"
     ],
     causes: [
       "LTOE username and Salesforce email do not match — these must be identical",
@@ -828,7 +760,22 @@ const ISSUES = [
     ],
     tips: [],
     warnings: ["A provider's email in Salesforce <strong>cannot</strong> be changed if their portal is already verified. A ticket must be submitted to LT Helpdesk to request this change."],
-    notes: ["Providers may still be able to log in even if the email and username don't match, but this often causes missing functionality."]
+    notes: ["Providers may still be able to log in even if the email and username don't match, but this often causes missing functionality."],
+    email: {
+      subject: "Troubleshooting Your Missing Credentials Tab",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! If the Credentials tab is not appearing in your account, this is typically caused by one of the following:
+
+- Your account has not yet been verified through the LT Online Experience invitation
+- There may be a mismatch between your login email and your account username
+
+Our team is reviewing your account. In the meantime, please ensure you have completed the account verification step using the invite sent to your email on file.
+
+We will follow up as soon as we have an update. Please don't hesitate to reach out with any questions!
+
+[Your Name]`
+    }
   },
   {
     id: 7, category: "cred", icon: "📋",
@@ -858,12 +805,33 @@ const ISSUES = [
       "Axuall requires <strong>third-party cookies</strong> to be enabled.",
       "If still blocked, try a different device."
     ],
-    warnings: [], notes: []
+    warnings: [], notes: [],
+    email: {
+      subject: "How to Access Your Credentialing Application",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! Here are the steps to access your credentialing application:
+
+1. Log in at www.locumtenens.com using the email address on file.
+2. Click CREDENTIALS from the top navigation menu.
+3. Select Credentialing Overview.
+4. You will see a prompt to verify your NPI and click Get Started, or click "Authenticate your account."
+5. You will then be automatically redirected to your credentialing application in Axuall.
+
+If you run into any issues, here are a few things to try:
+- Use Google Chrome for the best experience
+- Clear your browser cache if the page is slow or looping
+- Make sure third-party cookies are enabled in your browser settings
+
+Please don't hesitate to reach out if you have any questions!
+
+[Your Name]`
+    }
   },
   {
     id: 8, category: "mobile", icon: "🍪",
-    title: "Authenticate Button Not Working / Axuall Won't Load (Pop-Up Blocker or Cookies)",
-    description: "Clicking 'Authenticate your account' does nothing, or Axuall fails to open after the redirect.",
+    title: "Authenticate Button Not Working / Axuall Won't Load",
+    description: "Provider is likely being blocked by a pop-up blocker. This happens most often on Safari (Mac, iPhone, iPad). Direct them to use Chrome or disable their pop-up blocker. Send them the email template below.",
     keywords: [
       "authenticate button", "authenticate button not working", "nothing happens",
       "click authenticate", "button not working", "button doesnt work",
@@ -876,24 +844,41 @@ const ISSUES = [
       "redirect not working", "stuck on authenticate", "authenticate does nothing",
       "nothing happens when i click", "click and nothing happens", "button click nothing",
       "axuall blocked", "allow popups", "allow pop ups", "axuall isnt opening",
-      "axuall doesnt open", "cant access axuall", "axuall access denied",
-      "axuall not accessible", "provider cant get into axuall"
+      "axuall doesnt open", "cant access axuall", "provider cant get into axuall",
+      "safari", "safari blocked", "safari popup"
     ],
     causes: [
-      "Pop-up blocker preventing the Axuall tab from opening",
-      "Third-party cookies disabled — Axuall requires these to function",
-      "Browser incompatibility (Chrome is strongly recommended)",
+      "<strong>Most common:</strong> Pop-up blocker in Safari (Mac, iPhone, or iPad) is preventing the Axuall tab from opening",
+      "Third-party cookies are disabled — Axuall requires these to function",
+      "Browser incompatibility — Google Chrome is strongly recommended",
       "Browser cache causing redirect failure"
     ],
     steps: [
-      "Check for a <strong>pop-up blocked notification</strong> in the browser address bar — click it and select <strong>\"Always allow pop-ups from locumtenens.com\"</strong>.",
-      "Enable <strong>third-party cookies</strong>: Chrome &rarr; Settings &rarr; Privacy and Security &rarr; Cookies &rarr; Allow third-party cookies.",
-      "In Chrome: Settings &rarr; Privacy &rarr; Site Settings &rarr; Pop-ups and redirects &rarr; <strong>Allow locumtenens.com</strong>.",
+      "<strong>Recommend Google Chrome first</strong> — this resolves the issue in the majority of cases, especially for Safari users.",
+      "If the provider prefers Safari: check for a <strong>pop-up blocked notification</strong> in the address bar and allow pop-ups for locumtenens.com.",
+      "Enable <strong>third-party cookies</strong> in browser settings. In Chrome: Settings &rarr; Privacy and Security &rarr; Cookies &rarr; Allow third-party cookies.",
       "Have the provider <strong>clear their browser cache</strong> and try again.",
-      "If still not working, try a <strong>different browser</strong> (Chrome recommended) or a different device."
+      "If still not working, try a <strong>different device</strong> entirely."
     ],
-    tips: ["This is one of the most common reasons the Authenticate button appears to do nothing. <strong>Always check pop-up blocker first.</strong>"],
-    warnings: [], notes: []
+    tips: ["This is one of the most common issues. Safari on Mac, iPhone, and iPad blocks pop-ups by default — always recommend Chrome first."],
+    warnings: [], notes: [],
+    email: {
+      subject: "Action Required – Enable Popups to Access Your Credentialing Application",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! If the redirect to your credentialing application isn't happening, it's likely due to pop-up blockers in browsers like Safari on Mac, iPhone, and iPad.
+
+To resolve this, we recommend using Google Chrome. If you prefer Safari, you can disable the pop-up blocker using the steps below:
+
+- How to Allow Pop-ups in Chrome: https://support.google.com/chrome/answer/95472
+- How to Allow Pop-ups in Safari (Mac, iPhone & iPad): https://support.apple.com/guide/safari/sfri40696/mac
+
+Once pop-ups are allowed for locumtenens.com, click the button on the Credentials page and it should redirect you to your credentialing application.
+
+Please don't hesitate to reach out if you need further assistance!
+
+[Your Name]`
+    }
   },
   {
     id: 9, category: "cred", icon: "🔄",
@@ -919,7 +904,28 @@ const ISSUES = [
       "Clear browser cache if experiencing slow loading or looping.",
       "Axuall requires third-party cookies to be enabled."
     ],
-    warnings: [], notes: []
+    warnings: [], notes: [],
+    email: {
+      subject: "How to Start Your Re-Credentialing Application",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! Here are the steps to begin your re-credentialing application:
+
+1. Log in at www.locumtenens.com using the email address on file.
+2. Click CREDENTIALS from the top navigation menu.
+3. Select Credentialing Overview.
+4. Click "Start my re-credentialing application."
+5. You will be automatically redirected to your re-credentialing application in Axuall.
+
+If you run into any issues, here are a few things to try:
+- Use Google Chrome for the best experience
+- Clear your browser cache if the page is slow or looping
+- Make sure third-party cookies are enabled in your browser settings
+
+Please don't hesitate to reach out if you have any questions!
+
+[Your Name]`
+    }
   },
   {
     id: 10, category: "axuall", icon: "🪪",
@@ -933,9 +939,8 @@ const ISSUES = [
       "stuck on verification", "looped back", "identity error", "verification loop",
       "axuall identity", "axuall verification", "888-298-1730", "axuall support",
       "identity check failed", "we were unable to verify", "identity verification failed",
-      "middle name", "maiden name", "suffix", "hyphenated name", "name on id",
-      "wrong dob", "wrong ssn", "blocked from moving forward", "cant proceed identity",
-      "keeps looping", "looping back", "verification screen loop", "looped on identity"
+      "middle name", "maiden name", "suffix", "hyphenated name",
+      "wrong dob", "wrong ssn", "cant proceed identity", "keeps looping", "looping back"
     ],
     causes: [
       "<strong>Name mismatch:</strong> Name in Axuall doesn't exactly match government-issued ID (middle name vs. initial, maiden vs. married, hyphenated names, suffixes like Jr./Sr./III)",
@@ -949,7 +954,25 @@ const ISSUES = [
     ],
     tips: [],
     warnings: ["Axuall is extremely literal — even minor discrepancies (missing suffix, middle initial vs. full name) will cause failure. The provider <strong>must</strong> contact Axuall Support at 888-298-1730."],
-    notes: ["Common error messages: \"Identity verification failed\", \"We were unable to verify your identity\", or being looped back to the verification screen."]
+    notes: ["Common error messages: \"Identity verification failed\", \"We were unable to verify your identity\", or being looped back to the verification screen."],
+    email: {
+      subject: "Action Required – Contact Axuall Support for Identity Verification",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! We understand you are experiencing an issue with the identity verification step in your credentialing application.
+
+Because this step involves sensitive personal information, it must be resolved directly with Axuall Support. Please contact them at your earliest convenience:
+
+Axuall Support: 888-298-1730
+
+Common reasons for identity verification issues include a name discrepancy between what was entered and your government-issued ID, or an incorrect date of birth or Social Security Number.
+
+Axuall Support is the only party authorized to assist with identity verification and can securely correct your information.
+
+Please don't hesitate to reach out if you have any additional questions!
+
+[Your Name]`
+    }
   },
   {
     id: 11, category: "docs", icon: "🗃️",
@@ -981,7 +1004,25 @@ const ISSUES = [
     notes: [
       "Think of it: the Document Library is the <em>filing cabinet</em>; Credentialing is the <em>audit and verification process</em>. Having documents in the library does <strong>not</strong> mean a provider is credentialed.",
       "Documents uploaded <strong>before</strong> credentialing is finished will not appear in Axuall."
-    ]
+    ],
+    email: {
+      subject: "Information About Uploading Documents to the Document Library",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! The Document Library is available for uploading additional documents after your credentialing application has been fully completed in Axuall.
+
+If you have not yet completed your credentialing application, please do so first:
+
+1. Log in at www.locumtenens.com.
+2. Click CREDENTIALS from the top navigation.
+3. Select Credentialing Overview and follow the prompts to complete your application in Axuall.
+
+Once your credentialing application is complete, the Document Library will be accessible for any additional uploads.
+
+Please don't hesitate to reach out if you have any questions!
+
+[Your Name]`
+    }
   },
   {
     id: 12, category: "axuall", icon: "🤖",
@@ -994,8 +1035,7 @@ const ISSUES = [
       "why isnt filling", "wont pre-populate", "fields not populating",
       "information not pre-populating", "nothing pre-fills", "not autofilling",
       "data not filling", "why is it blank", "fields blank", "not auto populated",
-      "why arent fields filled", "information missing from application",
-      "application not filling in", "info not auto populating"
+      "why arent fields filled", "information missing from application"
     ],
     causes: [],
     steps: [
@@ -1009,7 +1049,27 @@ const ISSUES = [
     notes: [
       "<strong>Auto-populates:</strong> State licenses, expiration dates, board certifications, DEA, BLS/ACLS/PALS, NPI, name, DOB (after identity verification).",
       "<strong>Does NOT auto-populate:</strong> Preferred phone, home/mailing address, attestation questions, malpractice explanations, and all narrative/explanation fields."
-    ]
+    ],
+    email: {
+      subject: "Information About Your Credentialing Application Fields",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! Some fields in your credentialing application will auto-populate from verified databases after identity verification, while others need to be entered manually.
+
+Fields that typically auto-populate:
+- State licenses, expiration dates, and board certifications
+- DEA (when applicable), NPI, name, and date of birth
+
+Fields that must be entered manually:
+- Personal contact information (phone number, address)
+- Attestation questions (disciplinary history, prior convictions)
+- Malpractice history or explanations
+- Any narrative or explanation fields
+
+Please review and complete any remaining fields in your application. If primary source data is still missing after completing identity verification, please reply to this email and we will look into it further.
+
+[Your Name]`
+    }
   },
   {
     id: 13, category: "cred", icon: "⏱️",
@@ -1021,7 +1081,7 @@ const ISSUES = [
       "when will it appear", "still not showing", "not appearing in salesforce",
       "salesforce sync", "documents not updating", "when does it sync",
       "axuall to salesforce", "salesforce not updated", "documents missing salesforce",
-      "not transferred", "documents havent synced", "why arent documents in salesforce"
+      "not transferred", "documents havent synced"
     ],
     causes: ["Normal system sync delay between Axuall and Salesforce"],
     steps: [
@@ -1031,7 +1091,19 @@ const ISSUES = [
       "If documents are still missing after 24 hours, escalate to <a href='mailto:techopshelpdesk@locumtenens.com'>TechOps</a>."
     ],
     tips: ["This delay is normal and expected. No action is needed during the 24-hour sync window."],
-    warnings: [], notes: []
+    warnings: [], notes: [],
+    email: {
+      subject: "Update on Your Credentialing Documents",
+      body: `Hi [Provider Name],
+
+Thank you for your patience! Credentialing documents can take up to 24 hours to sync after submission. This is a normal part of the process and no action is required on your end at this time.
+
+Please check back after the 24-hour window. If your documents are still not appearing, please reply to this email and we will investigate right away.
+
+Thank you again for your patience!
+
+[Your Name]`
+    }
   },
   {
     id: 14, category: "portal", icon: "📊",
@@ -1056,9 +1128,92 @@ const ISSUES = [
       "Verify the provider is not confusing the <strong>Document Library</strong> with the Credentialing Application.",
       "If truly completed and status is still incorrect after <strong>24 hours</strong>, escalate to TechOps."
     ],
-    tips: [], warnings: [], notes: []
+    tips: [], warnings: [], notes: [],
+    email: {
+      subject: "Update on Your Credentialing Application Status",
+      body: `Hi [Provider Name],
+
+Thank you for reaching out! If your application status still shows as "Application Started" or "Application Sent," please confirm that you have fully submitted your application in Axuall — not just started it.
+
+If you have fully submitted your application and the status has not updated after 24 hours, please reply to this email with a screenshot of what you are currently seeing and we will look into it right away.
+
+Thank you for your patience!
+
+[Your Name]`
+    }
   }
 ];
+
+// ─────────────────────────────────────────────
+//  SHARED HELPERS
+// ─────────────────────────────────────────────
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+function catLabel(cat) {
+  return { login:"Login & Account", docs:"Documents", email:"Email & Invites",
+           cred:"Credentialing", axuall:"Axuall", mobile:"Mobile & Browser",
+           portal:"Portal & Tabs" }[cat] || cat;
+}
+
+// ─────────────────────────────────────────────
+//  EMAIL SECTION BUILDER (shared by browse + chat)
+// ─────────────────────────────────────────────
+function buildEmailSection(issue) {
+  if (!issue.email) return "";
+  const escapedBody = escHtml(issue.email.body);
+  const escapedSubj = escHtml(issue.email.subject);
+  return `
+    <div class="email-section">
+      <button class="email-toggle-btn" onclick="toggleEmail(this)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <polyline points="2,4 12,13 22,4"/>
+        </svg>
+        <span class="email-btn-label">Email Response</span>
+      </button>
+      <div class="email-panel">
+        <div class="email-subject">Subject: ${escapedSubj}</div>
+        <pre class="email-body">${escapedBody}</pre>
+        <button class="copy-email-btn" onclick="copyEmail(this, ${issue.id})">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          </svg>
+          Copy to Clipboard
+        </button>
+      </div>
+    </div>`;
+}
+
+function toggleEmail(btn) {
+  const panel = btn.nextElementSibling;
+  const opening = panel.style.display !== "block";
+  panel.style.display = opening ? "block" : "none";
+  btn.classList.toggle("active", opening);
+  btn.querySelector(".email-btn-label").textContent = opening ? "Hide Email" : "Email Response";
+}
+window.toggleEmail = toggleEmail;
+
+function copyEmail(btn, issueId) {
+  const issue = ISSUES.find(i => i.id === issueId);
+  if (!issue?.email) return;
+  const text = `Subject: ${issue.email.subject}\n\n${issue.email.body}`;
+  const finish = () => {
+    btn.classList.add("copied");
+    const orig = btn.innerHTML;
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove("copied"); }, 2000);
+  };
+  navigator.clipboard.writeText(text).then(finish).catch(() => {
+    const ta = Object.assign(document.createElement("textarea"), { value: text });
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+    finish();
+  });
+}
+window.copyEmail = copyEmail;
 
 // ─────────────────────────────────────────────
 //  BROWSE LOGIC
@@ -1073,7 +1228,7 @@ const noResultsEl  = document.getElementById("noResults");
 const resultMetaEl = document.getElementById("resultMeta");
 const catButtons   = document.querySelectorAll(".category-list button");
 
-function normalize(str) { return str.toLowerCase().replace(/<[^>]*>/g, ""); }
+function normalizeStr(str) { return str.toLowerCase().replace(/<[^>]*>/g, ""); }
 
 function highlight(text, query) {
   if (!query) return text;
@@ -1088,19 +1243,13 @@ function matchesSearch(issue, q) {
   const hay = [
     issue.title, issue.description,
     ...(issue.causes||[]), ...(issue.steps||[]),
-    ...(issue.tips||[]), ...(issue.warnings||[]), ...(issue.notes||[]),
-    ...(issue.keywords||[])
-  ].map(normalize).join(" ");
+    ...(issue.tips||[]), ...(issue.warnings||[]),
+    ...(issue.notes||[]), ...(issue.keywords||[])
+  ].map(normalizeStr).join(" ");
   return hay.includes(q.toLowerCase());
 }
 
 function matchesCategory(issue, cat) { return cat === "all" || issue.category === cat; }
-
-function catLabel(cat) {
-  return { login:"Login & Account", docs:"Documents", email:"Email & Invites",
-           cred:"Credentialing", axuall:"Axuall", mobile:"Mobile & Browser",
-           portal:"Portal & Tabs" }[cat] || cat;
-}
 
 function renderBrowse() {
   const filtered = ISSUES.filter(i => matchesCategory(i, activeCategory) && matchesSearch(i, searchQuery));
@@ -1108,9 +1257,12 @@ function renderBrowse() {
   noResultsEl.style.display = filtered.length ? "none" : "block";
 
   if (filtered.length) {
-    if (searchQuery) resultMetaEl.innerHTML = `Showing <strong>${filtered.length}</strong> result${filtered.length!==1?"s":""} for &ldquo;${searchQuery}&rdquo;`;
-    else if (activeCategory !== "all") resultMetaEl.innerHTML = `Showing <strong>${filtered.length}</strong> issue${filtered.length!==1?"s":""} in <strong>${catLabel(activeCategory)}</strong>`;
-    else resultMetaEl.innerHTML = `Showing all <strong>${filtered.length}</strong> issues`;
+    if (searchQuery)
+      resultMetaEl.innerHTML = `Showing <strong>${filtered.length}</strong> result${filtered.length!==1?"s":""} for &ldquo;${searchQuery}&rdquo;`;
+    else if (activeCategory !== "all")
+      resultMetaEl.innerHTML = `Showing <strong>${filtered.length}</strong> issue${filtered.length!==1?"s":""} in <strong>${catLabel(activeCategory)}</strong>`;
+    else
+      resultMetaEl.innerHTML = `Showing all <strong>${filtered.length}</strong> issues`;
   } else {
     resultMetaEl.innerHTML = "";
   }
@@ -1136,6 +1288,7 @@ function renderBrowse() {
     issue.warnings?.forEach(w => { body += `<div class="warn-box"><span class="box-icon">&#9888;</span><p>${highlight(w, searchQuery)}</p></div>`; });
     issue.tips?.forEach(t =>    { body += `<div class="tip-box"><span class="box-icon">&#128161;</span><p>${highlight(t, searchQuery)}</p></div>`; });
     issue.notes?.forEach(n =>   { body += `<div class="info-box"><span class="box-icon">&#8505;</span><p>${highlight(n, searchQuery)}</p></div>`; });
+    body += buildEmailSection(issue);
 
     card.innerHTML = `
       <div class="card-header" role="button" tabindex="0" aria-expanded="false">
@@ -1173,16 +1326,25 @@ function updateCounts() {
 searchInput.addEventListener("input", () => {
   searchQuery = searchInput.value.trim();
   searchInput.classList.toggle("has-value", !!searchQuery);
-  if (searchQuery) { activeCategory = "all"; catButtons.forEach(b => b.classList.remove("active")); document.querySelector('[data-cat="all"]').classList.add("active"); }
+  if (searchQuery) {
+    activeCategory = "all";
+    catButtons.forEach(b => b.classList.remove("active"));
+    document.querySelector('[data-cat="all"]').classList.add("active");
+  }
   renderBrowse();
 });
-clearBtn.addEventListener("click", () => { searchInput.value = ""; searchQuery = ""; searchInput.classList.remove("has-value"); renderBrowse(); searchInput.focus(); });
+clearBtn.addEventListener("click", () => {
+  searchInput.value = ""; searchQuery = "";
+  searchInput.classList.remove("has-value");
+  renderBrowse(); searchInput.focus();
+});
 catButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     activeCategory = btn.dataset.cat;
     catButtons.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
-    searchInput.value = ""; searchQuery = ""; searchInput.classList.remove("has-value");
+    searchInput.value = ""; searchQuery = "";
+    searchInput.classList.remove("has-value");
     renderBrowse();
   });
 });
@@ -1207,7 +1369,7 @@ document.querySelectorAll(".tab-nav button").forEach(btn => {
 // ─────────────────────────────────────────────
 const chatMessages = document.getElementById("chatMessages");
 const chatInput    = document.getElementById("chatInput");
-const chatSend     = document.getElementById("chatSend");
+const chatSendBtn  = document.getElementById("chatSend");
 
 const SUGGESTIONS = [
   "Authenticate button isn't working",
@@ -1222,40 +1384,35 @@ const SUGGESTIONS = [
   "Documents not showing in Salesforce"
 ];
 
-function escHtml(s) {
-  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-}
-
 function normalizeQuery(q) {
   return q.toLowerCase()
-    .replace(/[''`]/g, "'")
-    .replace(/can't|cant/g, "cannot")
-    .replace(/won't|wont/g, "will not")
-    .replace(/doesn't|doesnt/g, "does not")
-    .replace(/isn't|isnt/g, "is not")
-    .replace(/aren't|arent/g, "are not")
-    .replace(/haven't|havent/g, "have not")
-    .replace(/hasn't|hasnt/g, "has not")
-    .replace(/didn't|didnt/g, "did not")
-    .replace(/don't|dont/g, "do not")
-    .replace(/they're|theyre/g, "they are")
-    .replace(/it's|its\b/g, "it is")
-    .replace(/i'm|im\b/g, "i am")
-    .replace(/i've|ive\b/g, "i have")
-    .replace(/[^a-z0-9\s\-]/g, " ")
-    .replace(/\s+/g, " ").trim();
+    .replace(/[''`]/g,"'")
+    .replace(/can't|cant/g,"cannot")
+    .replace(/won't|wont/g,"will not")
+    .replace(/doesn't|doesnt/g,"does not")
+    .replace(/isn't|isnt/g,"is not")
+    .replace(/aren't|arent/g,"are not")
+    .replace(/haven't|havent/g,"have not")
+    .replace(/hasn't|hasnt/g,"has not")
+    .replace(/didn't|didnt/g,"did not")
+    .replace(/don't|dont/g,"do not")
+    .replace(/they're|theyre/g,"they are")
+    .replace(/it's|its\b/g,"it is")
+    .replace(/i'm|im\b/g,"i am")
+    .replace(/i've|ive\b/g,"i have")
+    .replace(/[^a-z0-9\s\-]/g," ")
+    .replace(/\s+/g," ").trim();
 }
 
 function scoreIssue(issue, nq) {
   let score = 0;
-  for (const kw of (issue.keywords || [])) {
-    const nkw = kw.toLowerCase().replace(/[^a-z0-9\s\-]/g, " ").replace(/\s+/g," ").trim();
+  for (const kw of (issue.keywords||[])) {
+    const nkw = kw.toLowerCase().replace(/[^a-z0-9\s\-]/g," ").replace(/\s+/g," ").trim();
     if (nq.includes(nkw)) {
-      const wordCount = nkw.split(/\s+/).length;
-      score += wordCount >= 3 ? wordCount * 4 : wordCount >= 2 ? wordCount * 3 : 1;
+      const wc = nkw.split(/\s+/).length;
+      score += wc >= 3 ? wc * 4 : wc >= 2 ? wc * 3 : 1;
     }
   }
-  // Bonus for individual title words
   const titleTokens = issue.title.toLowerCase().split(/\s+/).filter(w => w.length > 4);
   for (const t of titleTokens) {
     if (nq.split(/\s+/).includes(t)) score += 0.5;
@@ -1281,6 +1438,9 @@ function buildChatCard(issue) {
   issue.warnings?.forEach(w => { extraHtml += `<div class="crc-warn">&#9888; ${w}</div>`; });
   issue.tips?.slice(0,1).forEach(t => { extraHtml += `<div class="crc-tip">&#128161; ${t}</div>`; });
 
+  // Email section inside chat card uses same builder, wrapped in crc-email-section for spacing
+  const emailHtml = issue.email ? `<div class="crc-email-section">${buildEmailSection(issue)}</div>` : "";
+
   return `
     <div class="chat-result-card">
       <div class="crc-header">
@@ -1291,21 +1451,20 @@ function buildChatCard(issue) {
       <div class="crc-body">
         ${stepsHtml}
         ${extraHtml}
+        ${emailHtml}
         <button class="view-browse-btn" onclick="openInBrowse(${issue.id})">View full details in Browse &rarr;</button>
       </div>
     </div>`;
 }
 
 function openInBrowse(id) {
-  // Switch to Browse tab
   document.querySelector('[data-tab="browse"]').click();
   setTimeout(() => {
-    // Expand and scroll to card
     const card = document.getElementById(`issue-${id}`);
     if (!card) return;
     card.classList.add("open");
     card.querySelector(".card-header")?.setAttribute("aria-expanded","true");
-    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    card.scrollIntoView({ behavior:"smooth", block:"center" });
     card.classList.add("highlight-pulse");
     setTimeout(() => card.classList.remove("highlight-pulse"), 1400);
   }, 150);
@@ -1313,27 +1472,25 @@ function openInBrowse(id) {
 window.openInBrowse = openInBrowse;
 
 function getOpeningLine(matches, query) {
+  const nq = normalizeQuery(query);
   const top = matches[0].issue;
-  const score = matches[0].score;
-
-  if (top.id === 8 || (normalizeQuery(query).includes("authenticate") && normalizeQuery(query).includes("not")) || normalizeQuery(query).includes("popup") || normalizeQuery(query).includes("pop-up") || normalizeQuery(query).includes("cookies")) {
-    return "That sounds like a <strong>pop-up blocker or third-party cookies</strong> issue — this is one of the most common reasons the Authenticate button appears to do nothing. Here's how to fix it:";
+  if (top.id === 8 || nq.includes("popup") || nq.includes("pop-up") || nq.includes("safari") ||
+      (nq.includes("authenticate") && (nq.includes("not") || nq.includes("nothing"))) ||
+      nq.includes("cookies blocked") || nq.includes("nothing happens")) {
+    return "That sounds like a <strong>pop-up blocker issue — most common on Safari</strong> (Mac, iPhone, iPad). Here's what to do, including a ready-to-send email:";
   }
-  if (normalizeQuery(query).includes("locked")) return "A locked account can't be manually unlocked by TechOps — but here's how the provider can fix it themselves:";
-  if (normalizeQuery(query).includes("identity verification") || normalizeQuery(query).includes("verify identity")) return "Identity verification errors in Axuall need to be handled directly with Axuall Support. Here's what to tell the provider:";
-  if (normalizeQuery(query).includes("mobile") || normalizeQuery(query).includes("broken")) return "Good news — nothing is actually broken! This is a known mobile compatibility issue. Here's the fix:";
-  if (normalizeQuery(query).includes("sync") || normalizeQuery(query).includes("salesforce")) return "This is likely just the normal Axuall &rarr; Salesforce sync delay. Here's what you need to know:";
-  if (score >= 8) return `I found a strong match for that. Here's how to handle it:`;
-  return `Here's the most relevant information I found:`;
+  if (nq.includes("locked")) return "A locked account can't be manually unlocked by TechOps — but here's how the provider can fix it themselves:";
+  if (nq.includes("identity verification") || nq.includes("verify identity")) return "Identity verification errors must be handled directly with Axuall Support. Here's what to tell the provider:";
+  if (nq.includes("mobile") || nq.includes("broken")) return "Good news — nothing is actually broken! This is a known mobile compatibility issue. Here's the fix:";
+  if (nq.includes("sync") || (nq.includes("salesforce") && nq.includes("not"))) return "This is likely just the normal Axuall → Salesforce sync delay. Here's what you need to know:";
+  if (matches[0].score >= 8) return "Found a strong match. Here's how to handle it:";
+  return "Here's the most relevant information I found:";
 }
 
 function addMessage(html, type) {
   const row = document.createElement("div");
   row.className = `msg-row ${type}`;
-  const avText = type === "bot" ? "TO" : "You";
-  row.innerHTML = `
-    <div class="avatar ${type}">${avText}</div>
-    <div class="bubble ${type}">${html}</div>`;
+  row.innerHTML = `<div class="avatar ${type}">${type==="bot"?"TO":"You"}</div><div class="bubble ${type}">${html}</div>`;
   chatMessages.appendChild(row);
   chatMessages.scrollTop = chatMessages.scrollHeight;
   return row;
@@ -1352,8 +1509,7 @@ function handleChatQuery(query) {
   if (!query.trim()) return;
   addMessage(escHtml(query), "user");
   chatInput.value = "";
-  chatSend.disabled = true;
-
+  chatSendBtn.disabled = true;
   const typing = addTypingIndicator();
 
   setTimeout(() => {
@@ -1361,14 +1517,13 @@ function handleChatQuery(query) {
     const matches = findMatches(query);
 
     if (!matches.length) {
-      addMessage(`I wasn't able to find a match for that. Try rephrasing, or browse the issue categories directly.<br><br>For anything not covered here, contact TechOps:<br><strong>techopshelpdesk@locumtenens.com</strong> &mdash; 877-732-7080`, "bot");
-      chatSend.disabled = false;
+      addMessage(`I wasn't able to find a match for that. Try rephrasing, or browse the issue categories.<br><br>For anything not covered here, contact TechOps:<br><strong>techopshelpdesk@locumtenens.com</strong> &mdash; 877-732-7080`, "bot");
+      chatSendBtn.disabled = false;
       return;
     }
 
     const opening = getOpeningLine(matches, query);
     const mainCard = buildChatCard(matches[0].issue);
-
     let relatedHtml = "";
     if (matches.length > 1) {
       const chips = matches.slice(1, 4).map(m =>
@@ -1376,9 +1531,8 @@ function handleChatQuery(query) {
       ).join("");
       relatedHtml = `<div class="also-related"><strong>Also possibly related:</strong><br>${chips}</div>`;
     }
-
     addMessage(`${opening}${mainCard}${relatedHtml}`, "bot");
-    chatSend.disabled = false;
+    chatSendBtn.disabled = false;
   }, 700);
 }
 
@@ -1393,25 +1547,22 @@ function sendChat() {
   const q = chatInput.value.trim();
   if (q) handleChatQuery(q);
 }
-
-chatSend.addEventListener("click", sendChat);
-chatInput.addEventListener("keydown", e => { if (e.key === "Enter") sendChat(); });
-
-// Welcome message
-function initChat() {
-  const chips = SUGGESTIONS.map(s =>
-    `<span class="suggestion-chip" onclick="document.getElementById('chatInput').value=this.textContent;sendChat()">${s}</span>`
-  ).join("");
-
-  addMessage(`Hello! I'm the TechOps support assistant for LocumTenens.com.<br><br>Describe a provider issue in your own words and I'll walk you through the fix. You can say things like <em>"the authenticate button isn't doing anything"</em> or <em>"provider can't find their credentials tab."</em><br><br><div class="suggestions-wrap"><div class="suggestions-label">Or pick a common issue:</div><div class="suggestion-chips">${chips}</div></div>`, "bot");
-}
+chatSendBtn.addEventListener("click", sendChat);
+chatInput.addEventListener("keydown", e => { if (e.key==="Enter") sendChat(); });
+window.sendChat = sendChat;
 
 // ─────────────────────────────────────────────
 //  INIT
 // ─────────────────────────────────────────────
+function initChat() {
+  const chips = SUGGESTIONS.map(s =>
+    `<span class="suggestion-chip" onclick="document.getElementById('chatInput').value=this.textContent;sendChat()">${s}</span>`
+  ).join("");
+  addMessage(`Hello! I'm the TechOps support assistant for LocumTenens.com.<br><br>Describe a provider issue in your own words and I'll walk you through the fix — including a ready-to-send email template for the provider. Try something like <em>"the authenticate button isn't doing anything"</em> or <em>"provider can't find their credentials tab."</em><br><br><div class="suggestions-wrap"><div class="suggestions-label">Or pick a common issue:</div><div class="suggestion-chips">${chips}</div></div>`, "bot");
+}
+
 renderBrowse();
 initChat();
-window.sendChat = sendChat;
 </script>
 </body>
 </html>
